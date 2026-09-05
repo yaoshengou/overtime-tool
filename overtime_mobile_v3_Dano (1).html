@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>加班申報工具 v3</title>
+<style>
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC",sans-serif;background:#f5f7fb;margin:0;color:#111827}
+.wrap{max-width:560px;margin:auto;padding:20px 16px}.card{background:#fff;border:1px solid #e5e7eb;border-radius:18px;padding:18px;margin-bottom:14px}
+h1{font-size:24px;margin:0 0 6px}.sub,.note{color:#6b7280;font-size:13px;line-height:1.6}.sub{margin-bottom:18px}
+.field{margin-bottom:14px}.field label{display:block;font-size:14px;color:#6b7280;margin-bottom:6px}
+input{width:100%;padding:14px;border:1px solid #e5e7eb;border-radius:12px;font-size:16px;box-sizing:border-box}
+.row{display:flex;justify-content:space-between;gap:16px;padding:11px 0;border-bottom:1px solid #e5e7eb}.row:last-child{border-bottom:0}
+.label{color:#6b7280}.value{text-align:right;font-weight:600;max-width:65%}
+button{width:100%;padding:15px;border:0;border-radius:14px;font-size:17px;font-weight:700;margin-top:10px;cursor:pointer}
+.primary{background:#111827;color:#fff}.secondary{background:#eef0f4;color:#111827}.hidden{display:none}
+</style>
+</head>
+<body><div class="wrap">
+<h1>加班申報工具</h1>
+<div class="sub">作者:Dano</div>
+
+<div id="setup" class="card hidden">
+ <div class="field"><label>工號</label><input id="emp"></div>
+ <div class="field"><label>姓名</label><input id="name"></div>
+ <button class="primary" id="save">儲存基本資料</button>
+</div>
+
+<div id="main" class="card hidden">
+ <div class="row"><span class="label">姓名</span><span class="value" id="vName"></span></div>
+ <div class="row"><span class="label">工號</span><span class="value" id="vEmp"></span></div>
+ <div class="row"><span class="label">日期</span><span class="value" id="vDate"></span></div>
+ <div class="row"><span class="label">時間</span><span class="value" id="vTime"></span></div>
+ <div class="row"><span class="label">加班類型</span><span class="value" id="vType"></span></div>
+ <div class="row"><span class="label">PAY</span><span class="value">PAY</span></div>
+ <div class="row"><span class="label">請選0</span><span class="value">0</span></div>
+ <div class="row"><span class="label">原因</span><span class="value">配合生產</span></div>
+ <div class="row"><span class="label">休息</span><span class="value" id="vBreak"></span></div>
+ <div class="note" style="margin-top:14px;padding:12px;background:#f5f7fb;border-radius:12px">
+ 今天的申報內容已依平日／六日規則自動產生。送出前仍可在 Google Form 逐頁檢查。
+ </div>
+ <button class="primary" id="openForm">前往加班申報</button>
+ <button class="secondary" id="edit">修改基本資料</button>
+ <div class="note" style="margin-top:12px">按下後會開啟正式 Google Form 並預填已確認的加班資料。Google 帳號與電子郵件驗證仍由 Google 處理；請在表單最後確認內容後自行提交。</div>
+</div>
+</div>
+<script>
+(()=>{
+const BASE="https://docs.google.com/forms/d/e/1FAIpQLSeQlonRowaqwFUks_HoaSt0QonFOnfklRtmez8oIl3dWDzwVg/viewform?usp=pp_url";
+const $=id=>document.getElementById(id);
+function profile(){return{emp:localStorage.getItem("ot_emp")||"",name:localStorage.getItem("ot_name")||""}}
+function vals(){
+ const d=new Date(), weekend=d.getDay()===0||d.getDay()===6;
+ const y=d.getFullYear(),m=d.getMonth()+1,day=d.getDate();
+ return {
+  ...profile(), y,m,day,
+  iso:`${y}-${String(m).padStart(2,"0")}-${String(day).padStart(2,"0")}`,
+  sh:weekend?"08":"17", sm:"00", eh:"20", em:"00",
+  type:weekend?"25休息日加班 Foreign employees select 20":"10平日加班 Work overtime on weekdays",
+  brk:weekend?"2":"1"
+ };
+}
+function render(){
+ const p=profile(),has=p.emp&&p.name;
+ $("setup").classList.toggle("hidden",has);$("main").classList.toggle("hidden",!has);
+ if(!has)return;
+ const x=vals();
+ $("vName").textContent=x.name;$("vEmp").textContent=x.emp;$("vDate").textContent=x.iso;
+ $("vTime").textContent=`${x.sh}:${x.sm}–${x.eh}:${x.em}`;$("vType").textContent=x.type;$("vBreak").textContent=x.brk;
+}
+$("save").onclick=()=>{
+ const emp=$("emp").value.trim(),name=$("name").value.trim();
+ if(!emp||!name){alert("請填寫工號與姓名");return}
+ localStorage.setItem("ot_emp",emp);localStorage.setItem("ot_name",name);render();
+};
+$("edit").onclick=()=>{
+ const p=profile();localStorage.removeItem("ot_emp");localStorage.removeItem("ot_name");render();
+ $("emp").value=p.emp;$("name").value=p.name;
+};
+$("openForm").onclick=()=>{
+ const x=vals(), p=new URLSearchParams();
+ // 第一頁
+ p.set("entry.1887212512",x.emp);
+ p.set("entry.1368827355",x.name);
+ p.set("entry.2142121907","加班(Overtime)");
+ // 第8頁已確認欄位
+ p.set("entry.1845535146","0");
+ p.set("entry.941474327","PAY");
+ p.set("entry.1804705995",x.type);
+ // GET 預填日期使用單一 YYYY-MM-DD 值
+ p.set("entry.1261519849",x.iso);
+ p.set("entry.1086690423",x.sh);
+ p.set("entry.213940732",x.sm);
+ p.set("entry.1429136936",x.iso);
+ p.set("entry.389667626",x.eh);
+ p.set("entry.710216474",x.em);
+ p.set("entry.1721870764","配合生產");
+ p.set("entry.165856962",x.brk);
+ location.href=BASE+"&"+p.toString();
+};
+render();
+})();
+</script></body></html>
