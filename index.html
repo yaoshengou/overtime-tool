@@ -41,53 +41,118 @@ button{width:100%;padding:15px;border:0;border-radius:14px;font-size:17px;font-w
  </div>
  <button class="primary" id="openForm">前往加班申報</button>
  <button class="secondary" id="edit">修改基本資料</button>
- <div class="note" style="margin-top:12px">按下後會開啟正式 Google Form 並預填已確認的加班資料。Google 帳號與電子郵件驗證仍由 Google 處理；請在表單最後確認內容後自行提交。</div>
+ <div class="note" style="margin-top:12px">只有按下「前往加班申報」時才會記錄本次使用紀錄，之後會開啟正式 Google Form 並預填已確認的加班資料。Google 帳號與電子郵件驗證仍由 Google 處理；請在表單最後確認內容後自行提交。</div>
 </div>
 </div>
 <script>
 (()=>{
 const BASE="https://docs.google.com/forms/d/e/1FAIpQLSeQlonRowaqwFUks_HoaSt0QonFOnfklRtmez8oIl3dWDzwVg/viewform?usp=pp_url";
+const LOG_API="https://script.google.com/macros/s/AKfycbw25VvSZqWiJAkIccYWMiDdz3aokltWuJ9CcdOSVGIlzoVCmjK31qmuVkufpEUryFJw2g/exec";
 const $=id=>document.getElementById(id);
-function profile(){return{emp:localStorage.getItem("ot_emp")||"",name:localStorage.getItem("ot_name")||""}}
+
+function profile(){
+ return{
+  emp:localStorage.getItem("ot_emp")||"",
+  name:localStorage.getItem("ot_name")||""
+ }
+}
+
 function vals(){
  const d=new Date(), weekend=d.getDay()===0||d.getDay()===6;
  const y=d.getFullYear(),m=d.getMonth()+1,day=d.getDate();
  return {
   ...profile(), y,m,day,
   iso:`${y}-${String(m).padStart(2,"0")}-${String(day).padStart(2,"0")}`,
-  sh:weekend?"08":"17", sm:"00", eh:"20", em:"00",
-  type:weekend?"25休息日加班 Foreign employees select 20":"10平日加班 Work overtime on weekdays",
+  sh:weekend?"08":"17",
+  sm:"00",
+  eh:"20",
+  em:"00",
+  type:weekend
+    ?"25休息日加班 Foreign employees select 20"
+    :"10平日加班 Work overtime on weekdays",
   brk:weekend?"2":"1"
  };
 }
+
 function render(){
  const p=profile(),has=p.emp&&p.name;
- $("setup").classList.toggle("hidden",has);$("main").classList.toggle("hidden",!has);
+ $("setup").classList.toggle("hidden",has);
+ $("main").classList.toggle("hidden",!has);
  if(!has)return;
+
  const x=vals();
- $("vName").textContent=x.name;$("vEmp").textContent=x.emp;$("vDate").textContent=x.iso;
- $("vTime").textContent=`${x.sh}:${x.sm}–${x.eh}:${x.em}`;$("vType").textContent=x.type;$("vBreak").textContent=x.brk;
+ $("vName").textContent=x.name;
+ $("vEmp").textContent=x.emp;
+ $("vDate").textContent=x.iso;
+ $("vTime").textContent=`${x.sh}:${x.sm}–${x.eh}:${x.em}`;
+ $("vType").textContent=x.type;
+ $("vBreak").textContent=x.brk;
 }
+
+function logUsage(x){
+ const logData={
+  employeeId:x.emp,
+  name:x.name,
+  date:x.iso,
+  type:x.type,
+  time:`${x.sh}:${x.sm}-${x.eh}:${x.em}`
+ };
+
+ const body=JSON.stringify(logData);
+
+ // 導航離開頁面時 sendBeacon 比一般 fetch 更可靠。
+ try{
+  const blob=new Blob([body],{type:"text/plain;charset=UTF-8"});
+  const sent=navigator.sendBeacon(LOG_API,blob);
+  if(sent) return;
+ }catch(e){}
+
+ // 不支援 sendBeacon 時的備援。
+ try{
+  fetch(LOG_API,{
+   method:"POST",
+   mode:"no-cors",
+   keepalive:true,
+   body
+  });
+ }catch(e){}
+}
+
 $("save").onclick=()=>{
  const emp=$("emp").value.trim(),name=$("name").value.trim();
- if(!emp||!name){alert("請填寫工號與姓名");return}
- localStorage.setItem("ot_emp",emp);localStorage.setItem("ot_name",name);render();
+ if(!emp||!name){
+  alert("請填寫工號與姓名");
+  return;
+ }
+ localStorage.setItem("ot_emp",emp);
+ localStorage.setItem("ot_name",name);
+ render();
 };
+
 $("edit").onclick=()=>{
- const p=profile();localStorage.removeItem("ot_emp");localStorage.removeItem("ot_name");render();
- $("emp").value=p.emp;$("name").value=p.name;
+ const p=profile();
+ localStorage.removeItem("ot_emp");
+ localStorage.removeItem("ot_name");
+ render();
+ $("emp").value=p.emp;
+ $("name").value=p.name;
 };
+
 $("openForm").onclick=()=>{
- const x=vals(), p=new URLSearchParams();
+ const x=vals(),p=new URLSearchParams();
+
+ // 只有真的按下「前往加班申報」才記錄。
+ logUsage(x);
+
  // 第一頁
  p.set("entry.1887212512",x.emp);
  p.set("entry.1368827355",x.name);
  p.set("entry.2142121907","加班(Overtime)");
+
  // 第8頁已確認欄位
  p.set("entry.1845535146","0");
  p.set("entry.941474327","PAY");
  p.set("entry.1804705995",x.type);
- // GET 預填日期使用單一 YYYY-MM-DD 值
  p.set("entry.1261519849",x.iso);
  p.set("entry.1086690423",x.sh);
  p.set("entry.213940732",x.sm);
@@ -96,8 +161,10 @@ $("openForm").onclick=()=>{
  p.set("entry.710216474",x.em);
  p.set("entry.1721870764","配合生產");
  p.set("entry.165856962",x.brk);
+
  location.href=BASE+"&"+p.toString();
 };
+
 render();
 })();
 </script></body></html>
