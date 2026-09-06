@@ -92,7 +92,7 @@ function saveSession(emp,name){localStorage.setItem("ot_emp",emp.trim().toUpperC
 function clearSession(){localStorage.removeItem("ot_emp");localStorage.removeItem("ot_name");localStorage.removeItem("ot_logged_in")}
 function isoDate(d){return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`}
 function dayInfo(d){const iso=isoDate(d),holidayName=HOLIDAYS[iso]||"",weekend=d.getDay()===0||d.getDay()===6;return{iso,holidayName,isNationalHoliday:!!holidayName,isWeekend:weekend,isHoliday:!!holidayName||weekend}}
-function vals(){const d=new Date(),di=dayInfo(d),y=d.getFullYear(),m=d.getMonth()+1,day=d.getDate();return{...profile(),y,m,day,...di,sh:di.isHoliday?"08":"17",sm:"00",eh:"20",em:"00",type:di.isHoliday?"25休息日加班 Foreign employees select 20":"10平日加班 Work overtime on weekdays",brk:di.isHoliday?"2":"1"}}
+function vals(){const d=new Date(),di=dayInfo(d),y=d.getFullYear(),m=d.getMonth()+1,day=d.getDate();return{...profile(),y,m,day,...di,sh:di.isHoliday?"08":"17",sm:"00",eh:"20",em:"00",type:di.isNational?"60國定假日加班":(di.isHoliday?"25休息日加班 Foreign employees select 20":"10平日加班 Work overtime on weekdays"),brk:di.isHoliday?"2":"1"}}
 
 function records(){try{return JSON.parse(localStorage.getItem("ot_records")||"[]")}catch{return[]}}
 function writeRecords(r){localStorage.setItem("ot_records",JSON.stringify(r))}
