@@ -102,40 +102,33 @@ function normalizeRemote(v){const dayType=v.dayType||"";const isNat=dayType==="n
 function mergeRecords(remote){const map=new Map(records().map(v=>[v.key,v]));for(const raw of remote||[]){const v=normalizeRemote(raw);if(v.date&&v.time&&v.key)map.set(v.key,{...(map.get(v.key)||{}),...v})}const merged=[...map.values()].sort((a,b)=>String(a.date).localeCompare(String(b.date)));writeRecords(merged);return merged}
 function setSyncState(text,kind=""){const el=$("syncState");if(!el)return;el.textContent=text;el.className=`syncState ${kind}`}
 
-function jsonpRequest(params,timeoutMs=12000){
- return new Promise((resolve,reject)=>{
-  const cb="otJsonp_"+Date.now()+"_"+Math.random().toString(36).slice(2);
-  const script=document.createElement("script");
-  let done=false;
-  const cleanup=()=>{try{delete window[cb]}catch{};if(script.parentNode)script.parentNode.removeChild(script)};
-  const timer=setTimeout(()=>{if(done)return;done=true;cleanup();reject(new Error("連線逾時"))},timeoutMs);
-  window[cb]=(data)=>{if(done)return;done=true;clearTimeout(timer);cleanup();resolve(data)};
-  const url=new URL(LOG_API);
-  Object.entries(params||{}).forEach(([k,v])=>url.searchParams.set(k,String(v)));
-  url.searchParams.set("callback",cb);
-  url.searchParams.set("_",Date.now());
-  script.src=url.toString();
-  script.async=true;
-  script.onerror=()=>{if(done)return;done=true;clearTimeout(timer);cleanup();reject(new Error("無法連線到後台"))};
-  document.head.appendChild(script);
- });
+
+async function apiGet(params){
+ const url=new URL(LOG_API);
+ Object.entries(params||{}).forEach(([k,v])=>url.searchParams.set(k,String(v)));
+ url.searchParams.set("_",Date.now());
+ const res=await fetch(url.toString(),{method:"GET",cache:"no-store"});
+ if(!res.ok)throw new Error(`HTTP ${res.status}`);
+ return await res.json();
 }
 
 async function syncFromBackend(showStatus=true){
  const p=profile();if(!p.emp||!p.name)return false;
  if(showStatus)setSyncState("☁️ 正在從後台驗證並同步…","");
  try{
-  const data=await jsonpRequest({action:"records",employeeId:p.emp,name:p.name});
+  const data=await apiGet({action:"records",employeeId:p.emp,name:p.name});
   if(!data||data.ok!==true||data.loggedIn!==true||!Array.isArray(data.records))
    throw new Error(data&&data.error?data.error:"登入或回傳格式錯誤");
-  mergeRecords(data.records);renderAchievements();renderStats();
+  mergeRecords(data.records);
+  renderAchievements();
+  renderStats();
   setSyncState(`✅ 已登入｜已同步 ${data.records.length} 筆紀錄`,"syncOk");
   localStorage.setItem("ot_last_sync",new Date().toISOString());
-  return true
+  return true;
  }catch(e){
   console.warn("後台同步失敗",e);
   setSyncState(`❌ ${e.message||"驗證失敗"}`,"syncErr");
-  return false
+  return false;
  }
 }
 
@@ -143,28 +136,29 @@ async function loginAccount(emp,name,showState=true){
  const state=$("verifyState");
  if(showState)state.textContent="🔐 正在登入…";
  try{
-  const data=await jsonpRequest({action:"login",employeeId:emp,name});
+  const data=await apiGet({action:"login",employeeId:emp,name});
   if(!data||data.ok!==true||data.loggedIn!==true)
    throw new Error(data&&data.error?data.error:"登入失敗");
   if(showState)state.textContent="✅ 登入成功";
-  return true
+  return true;
  }catch(e){
   if(showState)state.textContent=`❌ ${e.message||"工號或姓名不正確"}`;
-  return false
+  return false;
  }
 }
 
 async function registerAccount(emp,name){
- const state=$("verifyState");state.textContent="📝 正在建立帳號…";
+ const state=$("verifyState");
+ state.textContent="📝 正在建立帳號…";
  try{
-  const data=await jsonpRequest({action:"register",employeeId:emp,name});
+  const data=await apiGet({action:"register",employeeId:emp,name});
   if(!data||data.ok!==true||data.registered!==true)
    throw new Error(data&&data.error?data.error:"註冊失敗");
   state.textContent=data.existing?"✅ 帳號已存在，已登入":"✅ 註冊成功，已登入";
-  return true
+  return true;
  }catch(e){
   state.textContent=`❌ ${e.message||"註冊失敗"}`;
-  return false
+  return false;
  }
 }
 
