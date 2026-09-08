@@ -4,195 +4,474 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#111827">
-<title>加班申報工具 v4.4</title>
+<title>加班申報工具 v4.7</title>
 <style>
-body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC",sans-serif;background:#f5f7fb;margin:0;color:#111827}
-.wrap{max-width:560px;margin:auto;padding:20px 16px 40px}.card{background:#fff;border:1px solid #e5e7eb;border-radius:18px;padding:18px;margin-bottom:14px}
-h1{font-size:24px;margin:0 0 6px}.sub,.note{color:#6b7280;font-size:13px;line-height:1.6}.sub{margin-bottom:18px}
-.field{margin-bottom:14px}.field label{display:block;font-size:14px;color:#6b7280;margin-bottom:6px}
-input{width:100%;padding:14px;border:1px solid #e5e7eb;border-radius:12px;font-size:16px;box-sizing:border-box}
-.row{display:flex;justify-content:space-between;gap:16px;padding:11px 0;border-bottom:1px solid #e5e7eb}.row:last-child{border-bottom:0}
-.label{color:#6b7280}.value{text-align:right;font-weight:600;max-width:65%}
-button{width:100%;padding:15px;border:0;border-radius:14px;font-size:17px;font-weight:700;margin-top:10px;cursor:pointer}.primary{background:#111827;color:#fff}.secondary{background:#eef0f4;color:#111827}.hidden{display:none}
-.dayBadge{display:inline-block;padding:6px 10px;border-radius:999px;font-size:13px;font-weight:700;background:#eef0f4;margin:0 0 12px}.holiday{background:#fee2e2;color:#991b1b}.weekend{background:#fff7ed;color:#9a3412}.weekday{background:#ecfdf5;color:#065f46}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}.stat{background:#f8fafc;border-radius:14px;padding:12px;text-align:center}.stat b{display:block;font-size:20px}.stat span{font-size:12px;color:#6b7280}
-.achievementGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}.achievement{border:1px solid #e5e7eb;border-radius:14px;padding:12px;opacity:.45;background:#f8fafc}.achievement.unlocked{opacity:1;background:#fff}.achievement .icon{font-size:25px}.achievement .name{font-weight:800;margin-top:5px}.achievement .desc{font-size:12px;color:#6b7280;margin-top:3px;line-height:1.45}.achievement .status{font-size:11px;font-weight:700;margin-top:8px}.unlocked .status{color:#047857}
-.sectionTitle{font-size:18px;font-weight:800;margin:0}.period{font-size:13px;color:#6b7280;margin-top:5px}.chart{display:flex;align-items:flex-end;gap:5px;height:150px;padding:14px 2px 0;border-bottom:1px solid #e5e7eb;overflow-x:auto}.barWrap{min-width:22px;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center}.bar{width:16px;background:#111827;border-radius:5px 5px 0 0;min-height:2px}.bar.holidayBar{background:#ef4444}.barLabel{font-size:9px;color:#6b7280;margin-top:5px;white-space:nowrap}.legend{display:flex;gap:14px;font-size:12px;color:#6b7280;margin-top:10px}.dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:#111827;margin-right:4px}.dot.red{background:#ef4444}.progress{height:8px;background:#e5e7eb;border-radius:999px;overflow:hidden;margin-top:10px}.progress>div{height:100%;background:#111827}.versionItem{padding:12px 0;border-bottom:1px solid #e5e7eb}.versionItem:last-child{border-bottom:0;padding-bottom:0}.versionHead{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:5px}.versionHead b{font-size:15px}.versionHead span{font-size:12px;color:#6b7280}.changelog{padding-bottom:14px}.syncBox{margin-top:12px;padding:11px 12px;border-radius:12px;background:#f8fafc;font-size:13px;color:#475569;display:flex;justify-content:space-between;gap:12px;align-items:center}.syncState{font-weight:700}.syncOk{color:#047857}.syncWarn{color:#b45309}.syncErr{color:#b91c1c}.miniBtn{width:auto;padding:8px 10px;border-radius:10px;font-size:12px;margin:0;background:#e2e8f0;color:#111827;white-space:nowrap}
-@media(max-width:400px){.achievementGrid{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}.stats .stat:last-child{grid-column:1/-1}}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC",sans-serif;background:#f5f7fb;margin:0;color:#111827}.wrap{max-width:600px;margin:auto;padding:20px 16px 40px}.card{background:#fff;border:1px solid #e5e7eb;border-radius:18px;padding:18px;margin-bottom:14px}h1{font-size:24px;margin:0 0 6px}.sub,.note{color:#6b7280;font-size:13px;line-height:1.6}.sub{margin-bottom:12px}.field{margin-bottom:14px}.field label{display:block;font-size:14px;color:#6b7280;margin-bottom:6px}input,select{width:100%;padding:14px;border:1px solid #e5e7eb;border-radius:12px;font-size:16px;box-sizing:border-box}.row{display:flex;justify-content:space-between;gap:16px;padding:11px 0;border-bottom:1px solid #e5e7eb}.row:last-child{border-bottom:0}.label{color:#6b7280}.value{text-align:right;font-weight:600;max-width:68%}button{width:100%;padding:14px;border:0;border-radius:14px;font-size:16px;font-weight:700;margin-top:10px;cursor:pointer}.primary{background:#111827;color:#fff}.secondary{background:#eef0f4;color:#111827}.danger{background:#fee2e2;color:#991b1b}.hidden{display:none!important}.dayBadge{display:inline-block;padding:6px 10px;border-radius:999px;font-size:13px;font-weight:700;background:#eef0f4;margin:0 0 12px}.holiday{background:#fee2e2;color:#991b1b}.weekend{background:#fff7ed;color:#9a3412}.weekday{background:#ecfdf5;color:#065f46}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}.stat{background:#f8fafc;border-radius:14px;padding:12px;text-align:center}.stat b{display:block;font-size:20px}.stat span{font-size:12px;color:#6b7280}.sectionTitle{font-size:18px;font-weight:800;margin:0}.period{font-size:13px;color:#6b7280;margin-top:5px}.achievementGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}.achievement{border:1px solid #e5e7eb;border-radius:14px;padding:12px;opacity:.42;background:#f8fafc}.achievement.unlocked{opacity:1;background:#fff}.achievement.secret:not(.unlocked) .name,.achievement.secret:not(.unlocked) .desc{filter:blur(5px)}.achievement .icon{font-size:25px}.achievement .name{font-weight:800;margin-top:5px}.achievement .desc{font-size:12px;color:#6b7280;margin-top:3px;line-height:1.45}.achievement .status{font-size:11px;font-weight:700;margin-top:8px}.rarity{font-size:10px;font-weight:800;margin-top:5px;color:#6b7280}.unlocked .status{color:#047857}.progress{height:8px;background:#e5e7eb;border-radius:999px;overflow:hidden;margin-top:10px}.progress>div{height:100%;background:#111827}.nav{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:14px;position:sticky;top:6px;z-index:5}.nav button{margin:0;padding:10px 4px;font-size:13px;background:#fff;border:1px solid #e5e7eb}.nav button.active{background:#111827;color:#fff}.chart{display:flex;align-items:flex-end;gap:5px;height:150px;padding:14px 2px 0;border-bottom:1px solid #e5e7eb;overflow-x:auto}.barWrap{min-width:22px;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center}.bar{width:18px;background:#38bdf8;border-radius:5px 5px 0 0;min-height:2px;border:1px solid rgba(255,255,255,.45);box-shadow:0 0 8px rgba(255,255,255,.10)}.bar.weekendBar{background:#fbbf24}.bar.nationalBar{background:#fb7185}.barLabel{font-size:10px;color:#f8fafc;margin-top:5px;font-weight:800}.recordItem{padding:10px 0;border-bottom:1px solid #e5e7eb;font-size:13px}.recordItem:last-child{border-bottom:0}.recordTop{display:flex;justify-content:space-between;gap:10px;font-weight:700}.equivBox{margin-top:12px;background:#f8fafc;border-radius:14px;padding:13px}.equivBox b{font-size:20px}.modalBack{position:fixed;inset:0;background:rgba(17,24,39,.55);display:flex;align-items:center;justify-content:center;padding:20px;z-index:50}.modal{background:#fff;border-radius:20px;padding:22px;width:min(390px,100%);text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.25)}.modalIcon{font-size:52px}.modalTitle{font-size:22px;font-weight:900;margin:8px 0}.modalRarity{font-size:12px;font-weight:800;color:#6b7280;margin-bottom:10px}.modalText{font-size:14px;color:#475569;line-height:1.6}.versionItem{padding:10px 0;border-bottom:1px solid #e5e7eb}.versionHead{display:flex;justify-content:space-between;gap:12px}.versionHead span{font-size:12px;color:#6b7280}.adminBadge{display:inline-block;background:#ede9fe;color:#5b21b6;padding:5px 9px;border-radius:999px;font-size:12px;font-weight:800;margin-left:6px}.logItem{padding:10px 0;border-bottom:1px solid #e5e7eb;font-size:13px}.logItem:last-child{border-bottom:0}.logCode{font-weight:900}.okText{color:#047857}.warnText{color:#b45309}.tiny{font-size:11px;color:#6b7280;word-break:break-all}.adminOnly{display:none}.isAdmin .adminOnly{display:block}@media(max-width:420px){.achievementGrid{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}.stats .stat:last-child{grid-column:1/-1}}
+
+
+.nationalNotice{margin-top:16px;margin-bottom:4px;padding:14px 16px;border:2px solid #f59e0b;border-radius:14px;background:#fff7ed;color:#9a3412;font-size:14px;line-height:1.65;font-weight:700}.nationalNotice b{font-size:15px;color:#7c2d12}.nationalNotice .small{display:block;margin-top:4px;font-size:13px;font-weight:600;color:#9a3412}
 </style>
 </head>
-<body><div class="wrap">
-<h1>加班申報工具</h1><div class="sub">作者:Dano</div>
-<div class="card changelog">
- <div class="sectionTitle">📝 更新日誌</div>
- <div class="versionItem"><div class="versionHead"><b>v4.4</b><span>2026/09/06</span></div><div class="note">新增註冊／登入與本機記憶：首次註冊後，這台瀏覽器會保存登入狀態；之後開啟網站自動登入，不需重複輸入工號與姓名。</div></div>
-</div>
-<div id="setup" class="card hidden">
- <div class="sectionTitle" id="authTitle">登入</div>
- <div class="note" id="authHint" style="margin:6px 0 14px">已註冊過請直接登入；第一次使用請先註冊。</div>
- <div class="field"><label>工號</label><input id="emp" autocomplete="username"></div>
- <div class="field"><label>姓名</label><input id="name" autocomplete="name"></div>
- <button class="primary" id="save">登入</button>
- <button class="secondary" id="switchAuth">第一次使用？註冊</button>
- <div id="verifyState" class="note" style="margin-top:10px"></div>
-</div>
-<div id="main" class="card hidden">
- <div id="dayBadge" class="dayBadge"></div>
- <div class="row"><span class="label">姓名</span><span class="value" id="vName"></span></div>
- <div class="row"><span class="label">工號</span><span class="value" id="vEmp"></span></div>
- <div class="row"><span class="label">日期</span><span class="value" id="vDate"></span></div>
- <div class="row"><span class="label">時間</span><span class="value" id="vTime"></span></div>
- <div class="row"><span class="label">加班類型</span><span class="value" id="vType"></span></div>
- <div class="row"><span class="label">PAY</span><span class="value">PAY</span></div>
- <div class="row"><span class="label">請選0</span><span class="value">0</span></div>
- <div class="row"><span class="label">原因</span><span class="value">配合生產</span></div>
- <div class="row"><span class="label">休息</span><span class="value" id="vBreak"></span></div>
- <div class="note" id="ruleNote" style="margin-top:14px;padding:12px;background:#f5f7fb;border-radius:12px"></div>
- <button class="primary" id="openForm">前往加班申報</button><button class="secondary" id="edit">登出／切換帳號</button>
- <div class="note" style="margin-top:12px">成就與統計以「按下前往加班申報」為紀錄；Google Form 最後仍需自行確認提交。</div>
- <div class="syncBox"><span id="syncState" class="syncState">☁️ 尚未同步</span><button id="syncNow" class="miniBtn" type="button">立即同步</button></div>
+<body data-environment="PRODUCTION"><div class="wrap">
+<h1 id="appLogo">加班申報工具</h1>
+<div class="sub">作者:Dano｜<span id="versionTap">v4.7</span></div>
+<div id="setup" class="card">
+ <div class="sectionTitle">登入</div>
+ <div class="note" style="margin:6px 0 14px">請輸入工號與中文姓名。</div>
+ <div class="field"><label>工號</label><input id="emp" autocomplete="username" placeholder="請輸入工號"></div>
+ <div class="field"><label>姓名</label><input id="name" type="text" autocomplete="name" placeholder="請輸入中文姓名"></div>
+ <div class="field"><label>部門（註冊時使用）</label><select id="department"><option value="MA1100&1P00">MA1100&1P00</option></select></div>
+ <div class="field"><label>班別（註冊時使用）</label><select id="shift"><option value="DAY">日班</option><option value="NIGHT">夜班</option></select></div>
+ <div class="field"><label>班型（註冊時使用）</label><select id="scheduleType"><option value="REGULAR">常日/夜</option><option value="42A">42A</option><option value="42B">42B</option><option value="42C">42C</option></select></div>
+ <button class="primary" id="localLogin">登入</button>
+ <button class="secondary" id="localRegister">新使用者註冊</button>
+ <div id="loginState" class="note" style="margin-top:10px"></div>
 </div>
 
-<div id="statsCard" class="card hidden">
- <div class="sectionTitle">📊 加班統計</div>
- <div class="period" id="statsPeriod"></div>
- <div class="stats">
-  <div class="stat"><b id="statHours">0</b><span>區間實際時數</span></div>
-  <div class="stat"><b id="statDays">0</b><span>加班天數</span></div>
-  <div class="stat"><b id="statAvg">0</b><span>平均時數</span></div>
+<div id="app" class="hidden">
+ <div class="nav">
+  <button data-tab="declare" class="active">申報</button><button data-tab="records">紀錄</button><button data-tab="achievements">成就</button><button data-tab="settings">設定</button><button data-tab="admin" class="adminOnly">管理</button>
  </div>
- <div class="row"><span class="label">平日加班</span><span class="value" id="weekdayHours">0 小時</span></div>
- <div class="row"><span class="label">假日加班</span><span class="value" id="holidayHours">0 小時</span></div>
- <div class="chart" id="hoursChart"></div>
- <div class="legend"><span><i class="dot"></i>平日</span><span><i class="dot red"></i>週末／國定假日</span></div>
- <div class="note" style="margin-top:10px">統計區間依你的規則：前一個月 26 日～當月 25 日（含首尾）。實際時數＝申報起訖時間－休息時間。</div>
+
+ <section id="tab-declare" class="tab">
+  <div class="card">
+   <div id="dayBadge" class="dayBadge"></div>
+   <div class="row"><span class="label">姓名</span><span class="value" id="vName"></span></div>
+   <div class="row"><span class="label">工號</span><span class="value" id="vEmp"></span></div>
+   <div class="row"><span class="label">部門</span><span class="value" id="vDepartment"></span></div>
+   <div class="row"><span class="label">班別 / 班型</span><span class="value" id="vShiftSchedule"></span></div>
+   <div class="row"><span class="label">日期</span><span class="value" id="vDate"></span></div>
+   <div class="row"><span class="label">時間</span><span class="value" id="vTime"></span></div>
+   <div class="row"><span class="label">加班類型</span><span class="value" id="vType"></span></div>
+   <div class="row"><span class="label">休息</span><span class="value" id="vBreak"></span></div>
+   <div class="equivBox"><div class="note">本次換算</div><b id="currentHours">0h</b><div class="note" id="currentEquiv">等值基本時數 0h</div></div>
+   <div class="nationalNotice">
+      ⚠️ <b>國定假日申報注意事項</b>
+      <span class="small">一般班別可自動判斷國定假日；目前版本的 42A／42B／42C 輪班尚無法自動判斷國定假日。若 42 輪班遇到國定假日，請在送出前自行確認並手動修改為正確的國定假日加班項目。</span>
+    </div>
+    <button class="primary" id="simulate">前往加班申報</button>
+  </div>
+ </section>
+
+ <section id="tab-records" class="tab hidden">
+  <div class="card">
+   <div class="sectionTitle">📊 加班統計</div><div class="period" id="statsPeriod"></div>
+   <div class="stats"><div class="stat"><b id="statHours">0h</b><span>實際加班</span></div><div class="stat"><b id="statEquivalent">0h</b><span>等值基本時數</span></div><div class="stat"><b id="statDays">0</b><span>加班天數</span></div></div>
+   <div class="row"><span class="label">平日加班</span><span class="value" id="weekdayHours">0 小時</span></div>
+   <div class="row"><span class="label">休息日加班</span><span class="value" id="weekendHours">0 小時</span></div>
+   <div class="row"><span class="label">國定假日加班</span><span class="value" id="nationalHours">0 小時</span></div>
+   <div class="chart" id="hoursChart"></div>
+   <div class="note" style="margin-top:10px">統計區間：前一個月 26 日～當月 25 日。等值基本時數依你的規則換算：平日 1.5 倍；週末／國定假日前 8 小時 2 倍，超過 8 小時部分 3 倍。</div>
+  </div>
+  <div class="card"><div class="sectionTitle">🧾 申報紀錄</div><div id="recordList" class="note" style="margin-top:10px"></div></div>
+ </section>
+
+ <section id="tab-achievements" class="tab hidden">
+  <div class="card"><div class="sectionTitle">🏆 我的加班成就</div><div class="stats"><div class="stat"><b id="statTotal">0</b><span>申報次數</span></div><div class="stat"><b id="statHoliday">0</b><span>假日出勤</span></div><div class="stat"><b id="statUnlocked">0/0</b><span>已解鎖</span></div></div><div class="progress"><div id="achievementProgress" style="width:0%"></div></div><div id="achievementGrid" class="achievementGrid"></div></div>
+ </section>
+
+ <section id="tab-settings" class="tab hidden">
+  <div class="card"><div class="sectionTitle">⚙️ 設定</div>
+    <button class="secondary" id="logout">登出</button>
+   </div>
+   <div id="adminEntryCard" class="card hidden">
+   <div class="sectionTitle">🔐 管理員登入</div>
+   <div class="note" style="margin-top:6px">此入口只會在後端確認目前登入身分具有管理員資格時顯示。</div>
+   <div class="field" style="margin-top:12px">
+    <label>管理員密碼</label>
+    <input id="adminPassword" type="password" autocomplete="current-password" placeholder="請輸入管理員密碼">
+   </div>
+   <button class="secondary" id="adminLoginBtn">進入管理控制台</button>
+   <div id="adminLoginState" class="note" style="margin-top:8px"></div>
+  </div>
+
+  <div class="card"><div class="sectionTitle">📝 v4.7 更新內容</div>
+    <div class="versionItem">
+      <div class="versionHead"><b>42 輪班支援</b><span>v4.7</span></div>
+      <div class="note">新增 42A／42B／42C 班型，依 4 上 2 休循環自動判斷工作日與休息日。</div>
+    </div>
+    <div class="versionItem">
+      <div class="versionHead"><b>夜班申報支援</b><span>v4.7</span></div>
+      <div class="note">新增夜班申報規則，支援平日 05:00–08:00 與休息日 20:00–隔日 08:00 的申報時段。</div>
+    </div>
+    <div class="versionItem">
+      <div class="versionHead"><b>部門／班別設定</b><span>v4.7</span></div>
+      <div class="note">新增部門、日夜班與班型資料，登入後可依後台設定自動套用對應申報內容。</div>
+    </div>
+   </div>
+  </section>
+ <section id="tab-admin" class="tab hidden adminOnly">
+  <div class="card"><div class="sectionTitle">🛠 管理控制台 <span class="adminBadge">ADMIN</span></div><div class="note" style="margin-top:6px">管理介面。</div><div class="stats"><div class="stat"><b id="adminUsers">0</b><span>使用者</span></div><div class="stat"><b id="adminRecords">0</b><span>申報紀錄</span></div><div class="stat"><b id="adminErrors">0</b><span>Error Log</span></div></div><button class="danger" id="adminLogoutBtn">登出管理員</button></div>
+  <div class="card"><div class="sectionTitle">🚦 系統狀態</div><div class="row"><span class="label">版本</span><span class="value">v4.7</span></div><div class="row"><span class="label">環境</span><span class="value warnText">PRODUCTION</span></div><div class="row"><span class="label">Backend</span><span class="value okText">已連線</span></div><div class="row"><span class="label">資料寫入</span><span class="value okText">啟用</span></div></div>
+  <div class="card"><div class="sectionTitle">📋 Error Log</div><div id="adminErrorList" class="note" style="margin-top:10px"></div></div>
+  <div class="card"><div class="sectionTitle">👥 使用者管理</div><div id="adminUserList" class="note" style="margin-top:10px"></div></div>
+  <div class="card"><div class="sectionTitle">🧾 紀錄管理</div><div id="adminRecordList" class="note" style="margin-top:10px"></div></div>
+  <div class="card"><div class="sectionTitle">🎉 國定假日</div><div class="row"><span class="label">目前來源</span><span class="value" id="adminHolidaySource">-</span></div><div class="row"><span class="label">今日判斷</span><span class="value" id="adminHolidayToday">-</span></div><div class="note">優先使用後端假日資料；斷線時可顯示快取／備援資訊，但申報仍必須由後端驗證成功。</div></div>
+  <div class="card"><div class="sectionTitle">🏆 成就管理</div><div class="row"><span class="label">目前成就數</span><span class="value" id="adminAchCount">25</span></div><div class="row"><span class="label">已解鎖</span><span class="value" id="adminUnlockedCount">0</span></div></div>
+  <div class="card"><div class="sectionTitle">⚙️ 系統設定</div>
+   <div class="row"><span class="label">平日倍率</span><span class="value">1.5×</span></div>
+   <div class="row"><span class="label">假日前 8 小時</span><span class="value">2×</span></div>
+   <div class="row"><span class="label">假日超過 8 小時</span><span class="value">3×</span></div>
+  </div>
+  
+ </section>
 </div>
-<div id="achievementCard" class="card hidden"><div class="sectionTitle">🏆 我的加班成就</div><div class="stats"><div class="stat"><b id="statTotal">0</b><span>申報啟動</span></div><div class="stat"><b id="statHoliday">0</b><span>假日出勤</span></div><div class="stat"><b id="statUnlocked">0/8</b><span>已解鎖</span></div></div><div class="progress"><div id="achievementProgress" style="width:0%"></div></div><div id="achievementGrid" class="achievementGrid"></div></div>
 </div>
+
+<div id="achievementModal" class="modalBack hidden"><div class="modal"><div class="modalIcon" id="modalIcon">🏆</div><div class="modalTitle" id="modalName"></div><div class="modalRarity" id="modalRarity"></div><div class="modalText" id="modalText"></div><button class="primary" id="modalClose">收下成就</button></div></div>
+
 <script>
 (()=>{
-const BASE="https://docs.google.com/forms/d/e/1FAIpQLSeQlonRowaqwFUks_HoaSt0QonFOnfklRtmez8oIl3dWDzwVg/viewform?usp=pp_url";
-const LOG_API="https://script.google.com/macros/s/AKfycbztCAN0jSTP47DHHuU9l9ZCDBGynh4ycOR2Kzftgfm3Qu_zKXfZR5BRyhdI0dIb5JkSZg/exec";
 const $=id=>document.getElementById(id);
+ const BACKEND_API='https://script.google.com/macros/s/AKfycbz8krVLBrQ2j1xHo1QicmwDULwg3Ze9iHz7e4L6fNfxeRUvGHdT2uYqP_rI7GTeZcrK/exec';
+ const FORM_BASE='https://docs.google.com/forms/d/e/1FAIpQLSeQlonRowaqwFUks_HoaSt0QonFOnfklRtmez8oIl3dWDzwVg/viewform?usp=pp_url';
+ const API_TIMEOUT_MS=3000;
+ const API_RETRIES=1;
+ const HOLIDAY_CACHE_KEY='ot46_holiday_day_cache_v1';
+ const SYSTEM_CONFIG_CACHE_KEY='ot46_system_config_v1';
+ let systemConfig={nightShiftRuleMode:'ACTUAL_CROSS_DATE'};
 
-// 2026 台灣國定假日／補假。週六、週日本來就會另外判定為假日。
+ function sleep(ms){return new Promise(r=>setTimeout(r,ms))}
+ async function safeFetch(url,options={},timeoutMs=API_TIMEOUT_MS,retries=API_RETRIES){
+   let lastErr;
+   for(let attempt=0;attempt<=retries;attempt++){
+     const controller=new AbortController();
+     const timer=setTimeout(()=>controller.abort(),timeoutMs);
+     try{
+       const res=await fetch(url,{...options,signal:controller.signal});
+       clearTimeout(timer);
+       if(!res.ok)throw new Error('HTTP-'+res.status);
+       return res;
+     }catch(err){
+       clearTimeout(timer);
+       lastErr=err&&err.name==='AbortError'?new Error('連線逾時'):err;
+       if(attempt<retries)await sleep(450);
+     }
+   }
+   throw lastErr||new Error('NETWORK_FAILED');
+ }
+ async function getJson(url,options={}){const res=await safeFetch(url,options);return await res.json()}
+ async function validateRegistrationBackend(emp,name){const u=new URL(BACKEND_API);u.searchParams.set('action','validateRegistration');u.searchParams.set('employeeId',emp);u.searchParams.set('name',name);return await getJson(u.toString(),{method:'GET',cache:'no-store'});}
+ async function loginBackend(emp,name){const u=new URL(BACKEND_API);u.searchParams.set('action','login');u.searchParams.set('employeeId',emp);u.searchParams.set('name',name);return await getJson(u.toString(),{method:'GET',cache:'no-store'});}
+ async function recordsBackend(emp,name){const u=new URL(BACKEND_API);u.searchParams.set('action','records');u.searchParams.set('employeeId',emp);u.searchParams.set('name',name);return await getJson(u.toString(),{method:'GET',cache:'no-store'});}
+ async function systemConfigBackend(){const u=new URL(BACKEND_API);u.searchParams.set('action','systemConfig');return await getJson(u.toString(),{method:'GET',cache:'no-store'});}
+ async function loadSystemConfig(){try{const r=await systemConfigBackend();if(r&&r.ok){systemConfig={nightShiftRuleMode:'ACTUAL_CROSS_DATE'};localStorage.setItem(SYSTEM_CONFIG_CACHE_KEY,JSON.stringify(systemConfig));return}}catch{}try{systemConfig=JSON.parse(localStorage.getItem(SYSTEM_CONFIG_CACHE_KEY)||'{}')||systemConfig}catch{}}
+ async function registerBackend(emp,name,department,shift,scheduleType){return await getJson(BACKEND_API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({action:'register',employeeId:emp,name,department,shift,scheduleType}),cache:'no-store'});}
+
+ function normalizeRemoteRecord(v){const date=String(v&&v.date||'').slice(0,10),type=String(v&&v.type||''),time=String(v&&v.time||''),dayType=String(v&&v.dayType||'');const isNationalHoliday=dayType==='national_holiday'||type.startsWith('60'),isWeekend=dayType==='weekend'||type.startsWith('25'),isHoliday=isNationalHoliday||isWeekend;return{date,type,time,breakHours:(v&&v.breakHours!==''&&v&&v.breakHours!=null)?Number(v.breakHours):(isHoliday?2:1),isNationalHoliday,isWeekend,isHoliday,holidayName:String(v&&v.holidayName||''),ts:Number(v&&v.ts)||Date.now(),recordKey:String(v&&v.recordKey||'')}}
+ async function syncRecordsFromBackend(emp,name){const r=await recordsBackend(emp,name);if(!r||r.ok!==true||r.loggedIn!==true||!Array.isArray(r.records))throw new Error((r&&r.error)||'紀錄同步失敗');writeRecords(r.records.map(normalizeRemoteRecord));return r.records.length;}
+
+
+ async function adminEligibilityBackend(emp,name){
+   const u=new URL(BACKEND_API);
+   u.searchParams.set('action','adminEligibility');
+   u.searchParams.set('employeeId',emp);
+   u.searchParams.set('name',name);
+   return await getJson(u.toString(),{method:'GET',cache:'no-store'});
+ }
+ async function adminPost(action,payload={}){
+   return await getJson(BACKEND_API,{
+     method:'POST',
+     headers:{'Content-Type':'text/plain;charset=utf-8'},
+     body:JSON.stringify({action,...payload}),
+     cache:'no-store'
+   });
+ }
+ function adminToken(){return sessionStorage.getItem('ot45_admin_session')||''}
+ function setAdminSession(token){if(token)sessionStorage.setItem('ot45_admin_session',token);else sessionStorage.removeItem('ot45_admin_session')}
+ async function refreshAdminEligibility(){
+   const p=profile();
+   if(!p.emp||!p.name||p.role==='admin')return;
+   try{
+     const r=await adminEligibilityBackend(p.emp,p.name);
+     const card=$('adminEntryCard');
+     if(card) card.classList.toggle('hidden',!(r&&r.ok===true&&r.canAdminLogin===true));
+   }catch(err){
+     const card=$('adminEntryCard');
+     if(card) card.classList.add('hidden');
+     logError('ADMIN-ELIG-001','admin',String(err&&err.message||err));
+   }
+ }
+ async function restoreAdminSession(){
+   const token=adminToken();
+   if(!token)return false;
+   try{
+     const r=await adminPost('adminSessionCheck',{sessionToken:token});
+     if(r&&r.ok===true&&r.admin===true){
+       localStorage.setItem('ot45_role','admin');
+       return true;
+     }
+   }catch{}
+   setAdminSession('');
+   localStorage.setItem('ot45_role','user');
+   return false;
+ }
+ async function checkDateBackend(date){
+   const u=new URL(BACKEND_API);u.searchParams.set('action','checkDate');u.searchParams.set('date',date);
+   const data=await getJson(u.toString(),{method:'GET',cache:'no-store'});
+   if(!data||data.ok!==true)throw new Error((data&&data.errorCode)||'DATE_API_FAILED');
+   return data;
+ }
+ function normalizeDay(data,iso,verified=true,sourceOverride=''){
+   return {iso:data.date||iso,holidayName:data.holidayName||'',isNationalHoliday:!!data.isNationalHoliday,isWeekend:!!data.isWeekend,isHoliday:!!data.isHoliday,overtimeCode:Number(data.overtimeCode),overtimeType:data.overtimeType||'',holidaySource:sourceOverride||data.holidaySource||'',environment:data.environment||'',backendVerified:verified};
+ }
+ function readHolidayCache(iso){
+   try{const c=JSON.parse(localStorage.getItem(HOLIDAY_CACHE_KEY)||'{}');return c&&c[iso]?c[iso]:null}catch{return null}
+ }
+ function writeHolidayCache(day){
+   try{const c=JSON.parse(localStorage.getItem(HOLIDAY_CACHE_KEY)||'{}')||{};c[day.iso]={...day,cachedAt:Date.now()};localStorage.setItem(HOLIDAY_CACHE_KEY,JSON.stringify(c))}catch{}
+ }
+ function builtInDay(iso){
+   const d=dateFromIso(iso),isWeekend=d.getDay()===0||d.getDay()===6,name=HOLIDAYS[iso]||'',isNationalHoliday=!!name;
+   return {iso,holidayName:name,isNationalHoliday,isWeekend,isHoliday:isNationalHoliday||isWeekend,overtimeCode:isNationalHoliday?60:isWeekend?25:10,overtimeType:isNationalHoliday?'60國定假日加班':isWeekend?'25休息日加班':'10平日加班',holidaySource:'BUILTIN_FALLBACK',environment:'FALLBACK',backendVerified:false};
+ }
+ let backendDay=null;
+ async function syncBackendDay(){
+   const iso=todayIso();
+   try{
+     const data=await checkDateBackend(iso);
+     backendDay=normalizeDay(data,iso,true);
+     writeHolidayCache(backendDay);
+     return backendDay;
+   }catch(err){
+     const cached=readHolidayCache(iso);
+     backendDay=cached?{...cached,backendVerified:false,holidaySource:'LOCAL_CACHE'}:builtInDay(iso);
+     return backendDay;
+   }
+ }
 const HOLIDAYS_2026={
- "2026-01-01":"元旦",
- "2026-02-16":"除夕","2026-02-17":"春節","2026-02-18":"春節","2026-02-19":"春節","2026-02-20":"春節補假",
- "2026-02-27":"和平紀念日補假","2026-02-28":"和平紀念日",
- "2026-04-03":"兒童節補假","2026-04-04":"兒童節","2026-04-05":"清明節","2026-04-06":"清明節補假",
- "2026-05-01":"勞動節","2026-06-19":"端午節","2026-09-25":"中秋節","2026-09-28":"教師節",
- "2026-10-09":"國慶日補假","2026-10-10":"國慶日","2026-10-25":"臺灣光復節","2026-10-26":"臺灣光復節補假","2026-12-25":"行憲紀念日"
+ "2026-01-01":"元旦","2026-02-16":"除夕","2026-02-17":"春節","2026-02-18":"春節","2026-02-19":"春節","2026-02-20":"春節補假",
+ "2026-02-27":"和平紀念日補假","2026-02-28":"和平紀念日","2026-04-03":"兒童節補假","2026-04-04":"兒童節","2026-04-05":"清明節","2026-04-06":"清明節補假",
+ "2026-05-01":"勞動節","2026-06-19":"端午節","2026-09-25":"中秋節","2026-09-28":"教師節","2026-10-09":"國慶日補假","2026-10-10":"國慶日",
+ "2026-10-25":"臺灣光復節","2026-10-26":"臺灣光復節補假","2026-12-25":"行憲紀念日"
 };
 const HOLIDAYS={...HOLIDAYS_2026};
-
-function profile(){return{emp:localStorage.getItem("ot_emp")||"",name:localStorage.getItem("ot_name")||""}}
-function hasLocalSession(){const p=profile();return localStorage.getItem("ot_logged_in")==="1"&&!!p.emp&&!!p.name}
-function saveSession(emp,name){localStorage.setItem("ot_emp",emp.trim().toUpperCase());localStorage.setItem("ot_name",name.trim());localStorage.setItem("ot_logged_in","1")}
-function clearSession(){localStorage.removeItem("ot_emp");localStorage.removeItem("ot_name");localStorage.removeItem("ot_logged_in")}
+const RARITY={common:"普通",rare:"稀有",epic:"史詩",legendary:"傳說",hidden:"隱藏"};
 function isoDate(d){return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`}
-function dayInfo(d){const iso=isoDate(d),holidayName=HOLIDAYS[iso]||"",weekend=d.getDay()===0||d.getDay()===6;return{iso,holidayName,isNationalHoliday:!!holidayName,isWeekend:weekend,isHoliday:!!holidayName||weekend}}
-function vals(){const d=new Date(),di=dayInfo(d),y=d.getFullYear(),m=d.getMonth()+1,day=d.getDate();return{...profile(),y,m,day,...di,sh:di.isHoliday?"08":"17",sm:"00",eh:"20",em:"00",type:di.isNational?"60國定假日加班":(di.isHoliday?"25休息日加班 Foreign employees select 20":"10平日加班 Work overtime on weekdays"),brk:di.isHoliday?"2":"1"}}
-
-function records(){try{return JSON.parse(localStorage.getItem("ot_records")||"[]")}catch{return[]}}
-function writeRecords(r){localStorage.setItem("ot_records",JSON.stringify(r))}
-function recordFromVals(x){const time=`${x.sh}:${x.sm}-${x.eh}:${x.em}`;return{key:`${x.iso}|${x.type}|${time}`,date:x.iso,type:x.type,time,isHoliday:x.isHoliday,isNationalHoliday:x.isNationalHoliday,holidayName:x.holidayName||"",breakHours:Number(x.brk)||0,ts:Date.now()}}
-function saveRecord(x){let r=records(),item=recordFromVals(x);if(!r.some(v=>v.key===item.key)){r.push(item);writeRecords(r)}return item}
-function normalizeRemote(v){const dayType=v.dayType||"";const isNat=dayType==="national_holiday"||v.isNationalHoliday===true||v.isNationalHoliday==="true"||!!HOLIDAYS[String(v.date||"").slice(0,10)];const isWeekend=dayType==="weekend";const isHoliday=isNat||isWeekend||v.isHoliday===true||v.isHoliday==="true"||String(v.type||"").startsWith("25");const key=v.key||v.recordKey||`${v.date}|${v.type}|${v.time}`;return{key,date:String(v.date||"").slice(0,10),type:v.type||"",time:v.time||"",isHoliday,isNationalHoliday:isNat,holidayName:v.holidayName||"",breakHours:Number(v.breakHours)|| (isHoliday?2:1),ts:v.ts?Number(v.ts):Date.now()}}
-function mergeRecords(remote){const map=new Map(records().map(v=>[v.key,v]));for(const raw of remote||[]){const v=normalizeRemote(raw);if(v.date&&v.time&&v.key)map.set(v.key,{...(map.get(v.key)||{}),...v})}const merged=[...map.values()].sort((a,b)=>String(a.date).localeCompare(String(b.date)));writeRecords(merged);return merged}
-function setSyncState(text,kind=""){const el=$("syncState");if(!el)return;el.textContent=text;el.className=`syncState ${kind}`}
-
-
-async function apiGet(params){
- const url=new URL(LOG_API);
- Object.entries(params||{}).forEach(([k,v])=>url.searchParams.set(k,String(v)));
- url.searchParams.set("_",Date.now());
- const res=await fetch(url.toString(),{method:"GET",cache:"no-store"});
- if(!res.ok)throw new Error(`HTTP ${res.status}`);
- return await res.json();
+function profile(){return{emp:localStorage.getItem("ot45_emp")||"",name:localStorage.getItem("ot45_name")||"",role:localStorage.getItem("ot45_role")||"user",department:localStorage.getItem("ot46_department")||"",shift:localStorage.getItem("ot46_shift")||"",scheduleType:localStorage.getItem("ot46_schedule")||""}}
+function records(){try{return JSON.parse(localStorage.getItem(userScopedKey("ot45_records"))||"[]")}catch{return[]}}
+function writeRecords(v){localStorage.setItem(userScopedKey("ot45_records"),JSON.stringify(v))}
+function cachedUsers(){try{return JSON.parse(localStorage.getItem("ot45_users")||"[]")}catch{return[]}}
+function saveCachedUsers(v){localStorage.setItem("ot45_users",JSON.stringify(v))}
+function rememberCachedUser(emp,name){let a=cachedUsers();const id=emp.toUpperCase(),old=a.find(v=>v.emp===id);if(old){old.name=name;old.lastLogin=new Date().toISOString()}else a.push({emp:id,name,createdAt:new Date().toISOString(),lastLogin:new Date().toISOString()});saveCachedUsers(a)}
+function errorLogs(){try{return JSON.parse(localStorage.getItem("ot45_error_logs")||"[]")}catch{return[]}}
+function logError(code,module,message,detail={}){const a=errorLogs();const traceId=`OT-WEB-${Date.now()}-${Math.random().toString(36).slice(2,8).toUpperCase()}`;a.push({time:new Date().toISOString(),traceId,code,module,message,detail,version:"4.7",emp:profile().emp||"",stack:(new Error()).stack||""});localStorage.setItem("ot45_error_logs",JSON.stringify(a.slice(-200)));renderAdmin()}
+function todayIso(){return isoDate(new Date())}
+function dateFromIso(s){const [y,m,d]=s.split("-").map(Number);return new Date(y,m-1,d)}
+function dayInfo(){const iso=todayIso();if(backendDay&&backendDay.iso===iso)return {...backendDay,backendVerified:backendDay.backendVerified===true};return builtInDay(iso)}
+function addDaysIso(iso,days){const d=dateFromIso(iso);d.setDate(d.getDate()+days);return isoDate(d)}
+function daysBetweenIso(a,b){const A=Date.UTC(...a.split('-').map((v,i)=>i===1?Number(v)-1:Number(v))),B=Date.UTC(...b.split('-').map((v,i)=>i===1?Number(v)-1:Number(v)));return Math.round((B-A)/86400000)}
+function mod(n,m){return ((n%m)+m)%m}
+function is42WorkDay(iso,scheduleType){
+ const n=mod(daysBetweenIso('2026-09-01',iso),6);
+ if(scheduleType==='42A')return n<4;
+ if(scheduleType==='42B')return n>=2;
+ if(scheduleType==='42C')return n<2||n>=4;
+ return null;
 }
-
-async function syncFromBackend(showStatus=true){
- const p=profile();if(!p.emp||!p.name)return false;
- if(showStatus)setSyncState("☁️ 正在從後台驗證並同步…","");
- try{
-  const data=await apiGet({action:"records",employeeId:p.emp,name:p.name});
-  if(!data||data.ok!==true||data.loggedIn!==true||!Array.isArray(data.records))
-   throw new Error(data&&data.error?data.error:"登入或回傳格式錯誤");
-  mergeRecords(data.records);
-  renderAchievements();
-  renderStats();
-  setSyncState(`✅ 已登入｜已同步 ${data.records.length} 筆紀錄`,"syncOk");
-  localStorage.setItem("ot_last_sync",new Date().toISOString());
-  return true;
- }catch(e){
-  console.warn("後台同步失敗",e);
-  setSyncState(`❌ ${e.message||"驗證失敗"}`,"syncErr");
-  return false;
+function declarationPlan(iso,p,di){
+ const is42=['42A','42B','42C'].includes(p.scheduleType);
+ let workDay,code,type,isNationalHoliday=false,isWeekend=false,holidayName='';
+ if(is42){
+   workDay=is42WorkDay(iso,p.scheduleType);
+   code=workDay?10:25;isWeekend=!workDay;isNationalHoliday=false;
+   type=workDay?'10平日加班 Work overtime on weekdays':'25休息日加班 Foreign employees select 20';
+ }else{
+   code=di.overtimeCode||10;
+   isNationalHoliday=!!di.isNationalHoliday;isWeekend=!!di.isWeekend;holidayName=di.holidayName||'';
+   workDay=code===10;
+   type=code===60?'60國定假日加班 Foreign employees select 63':code===25?'25休息日加班 Foreign employees select 20':'10平日加班 Work overtime on weekdays';
  }
+ let sh='17',sm='00',eh='20',em='00',brk=1,startIso=iso,endIso=iso;
+ if(p.shift==='NIGHT'){
+   // 日別看 20:00 上班日；申報日期則照真實加班區間。
+   if(workDay){sh='05';eh='08';brk=1;startIso=iso;endIso=iso;}
+   else{sh='20';eh='08';brk=2;startIso=iso;endIso=addDaysIso(iso,1);}
+ }else if(!workDay){sh='08';eh='20';brk=2;}
+ return{...p,...di,iso,startIso,endIso,sh,sm,eh,em,type,brk,overtimeCode:code,isWorkDay:workDay,isNationalHoliday,isWeekend,isHoliday:!workDay,holidayName,dayType:is42?(workDay?'weekday':'weekend'):(code===60?'national_holiday':code===25?'weekend':'weekday')};
 }
+function vals(){const p=profile(),di=dayInfo();return declarationPlan(todayIso(),p,di)}
 
-async function loginAccount(emp,name,showState=true){
- const state=$("verifyState");
- if(showState)state.textContent="🔐 正在登入…";
- try{
-  const data=await apiGet({action:"login",employeeId:emp,name});
-  if(!data||data.ok!==true||data.loggedIn!==true)
-   throw new Error(data&&data.error?data.error:"登入失敗");
-  if(showState)state.textContent="✅ 登入成功";
-  return true;
- }catch(e){
-  if(showState)state.textContent=`❌ ${e.message||"工號或姓名不正確"}`;
-  return false;
- }
+function buildGoogleFormUrl(x){
+ const q=new URLSearchParams();
+ q.set("entry.1887212512",x.emp);
+ q.set("entry.1368827355",x.name);
+ q.set("entry.2142121907","加班(Overtime)");
+ q.set("entry.1845535146","0");
+ q.set("entry.941474327","PAY");
+ q.set("entry.1804705995",x.type);
+ q.set("entry.1261519849",x.startIso||x.iso);
+ q.set("entry.1086690423",x.sh);
+ q.set("entry.213940732",x.sm);
+ q.set("entry.1429136936",x.endIso||x.iso);
+ q.set("entry.389667626",x.eh);
+ q.set("entry.710216474",x.em);
+ q.set("entry.1721870764","配合生產");
+ q.set("entry.165856962",String(x.brk));
+ return FORM_BASE+"&"+q.toString();
 }
-
-async function registerAccount(emp,name){
- const state=$("verifyState");
- state.textContent="📝 正在建立帳號…";
- try{
-  const data=await apiGet({action:"register",employeeId:emp,name});
-  if(!data||data.ok!==true||data.registered!==true)
-   throw new Error(data&&data.error?data.error:"註冊失敗");
-  state.textContent=data.existing?"✅ 帳號已存在，已登入":"✅ 註冊成功，已登入";
-  return true;
- }catch(e){
-  state.textContent=`❌ ${e.message||"註冊失敗"}`;
-  return false;
- }
+function hoursFromVals(x){let s=Number(x.sh)*60+Number(x.sm),e=Number(x.eh)*60+Number(x.em);if(e<s)e+=1440;return Math.max(0,(e-s)/60-Number(x.brk||0))}
+function parseHours(v){const m=String(v.time||"").match(/(\d{2}):(\d{2})-(\d{2}):(\d{2})/);if(!m)return 0;let s=+m[1]*60+ +m[2],e=+m[3]*60+ +m[4];if(e<s)e+=1440;return Math.max(0,(e-s)/60-Number(v.breakHours||0))}
+// v4.5 自訂基本時數換算規則：平日全部 1.5 倍；假日（週末／國定假日）前 8 小時 2 倍，超過 8 小時部分 3 倍。
+function equivalentHours(hours,kind){
+  hours=Math.max(0,Number(hours)||0);
+  if(kind==="weekday") return hours*1.5;
+  const first8=Math.min(hours,8);
+  const overtime=Math.max(0,hours-8);
+  return first8*2+overtime*3;
 }
-
-function parseHours(v){const m=(v.time||"").match(/(\d{2}):(\d{2})-(\d{2}):(\d{2})/);if(!m)return 0;let start=Number(m[1])*60+Number(m[2]),end=Number(m[3])*60+Number(m[4]);if(end<start)end+=1440;const fallback=v.isHoliday?2:1;const br=Number.isFinite(Number(v.breakHours))?Number(v.breakHours):fallback;return Math.max(0,(end-start)/60-br)}
-function periodRange(now=new Date()){const end=new Date(now.getFullYear(),now.getMonth(),25);let targetEnd=end;if(now.getDate()>25)targetEnd=new Date(now.getFullYear(),now.getMonth()+1,25);const start=new Date(targetEnd.getFullYear(),targetEnd.getMonth()-1,26);return{start,end:targetEnd}}
-function shortDate(d){return `${d.getMonth()+1}/${d.getDate()}`}
-function renderStats(){const {start,end}=periodRange(),startIso=isoDate(start),endIso=isoDate(end);const r=records().filter(v=>v.date>=startIso&&v.date<=endIso);const items=r.map(v=>({...v,hours:parseHours(v)}));const total=items.reduce((a,v)=>a+v.hours,0),weekday=items.filter(v=>!v.isHoliday).reduce((a,v)=>a+v.hours,0),holiday=items.filter(v=>v.isHoliday).reduce((a,v)=>a+v.hours,0);$("statsPeriod").textContent=`${shortDate(start)} ～ ${shortDate(end)}`;$("statHours").textContent=`${total.toFixed(1)}h`;$("statDays").textContent=items.length;$("statAvg").textContent=items.length?`${(total/items.length).toFixed(1)}h`:"0h";$("weekdayHours").textContent=`${weekday.toFixed(1)} 小時`;$("holidayHours").textContent=`${holiday.toFixed(1)} 小時`;const max=Math.max(1,...items.map(v=>v.hours));$("hoursChart").innerHTML=items.length?items.map(v=>`<div class="barWrap" title="${v.date}：${v.hours.toFixed(1)} 小時"><div class="bar ${v.isHoliday?"holidayBar":""}" style="height:${Math.max(3,v.hours/max*120)}px"></div><div class="barLabel">${Number(v.date.slice(8))}</div></div>`).join(""):'<div class="note" style="align-self:center;width:100%;text-align:center">這個統計區間還沒有申報紀錄</div>'}
-
+function kindOf(v){return v.isNationalHoliday||String(v.type||"").startsWith("60")?"national":v.isWeekend||String(v.type||"").startsWith("25")?"weekend":"weekday"}
+function dayKey(){return isoDate(new Date())}
+function userScopedKey(base){const emp=String(profile().emp||'').trim().toUpperCase();return base+'_'+(emp||'GUEST')}
+function opState(){try{return JSON.parse(localStorage.getItem(userScopedKey("ot45_ops"))||"{}")||{}}catch{return{}}}
+function saveOp(s){localStorage.setItem(userScopedKey("ot45_ops"),JSON.stringify(s))}
+function markOp(name){const k=dayKey(),s=opState();if(s.day!==k){s.day=k;s.sections={};s.hiddenToday=[];s.recordsVisits=0}s.sections=s.sections||{};s.sections[name]=true;if(name==="records")s.recordsVisits=(s.recordsVisits||0)+1;saveOp(s);checkAchievements()}
+function tapCounter(key,need,windowMs){const now=Date.now(),s=opState();let a=(s[key]||[]).filter(t=>now-t<=windowMs);a.push(now);s[key]=a;saveOp(s);if(a.length>=need)checkAchievements()}
+function unlockedSet(){try{return new Set(JSON.parse(localStorage.getItem(userScopedKey("ot45_unlocked"))||"[]"))}catch{return new Set()}}
+function saveUnlocked(s){localStorage.setItem(userScopedKey("ot45_unlocked"),JSON.stringify([...s]))}
+function hasDateStreak(r,need){const days=[...new Set(r.map(v=>v.date).filter(Boolean))].sort();if(days.length<need)return false;let streak=1;for(let i=1;i<days.length;i++){const a=dateFromIso(days[i-1]),b=dateFromIso(days[i]),diff=Math.round((b-a)/86400000);streak=diff===1?streak+1:1;if(streak>=need)return true}return need<=1&&days.length>0}
 const ACH=[
- {id:"first",icon:"🚀",name:"首次出擊",desc:"第一次使用一鍵申報",ok:r=>r.length>=1},
- {id:"five",icon:"✋",name:"五連星",desc:"累積啟動 5 次申報",ok:r=>r.length>=5},
- {id:"ten",icon:"🔟",name:"十次達陣",desc:"累積啟動 10 次申報",ok:r=>r.length>=10},
- {id:"twentyfive",icon:"🏅",name:"25 次里程碑",desc:"累積啟動 25 次申報",ok:r=>r.length>=25},
- {id:"fifty",icon:"🏆",name:"申報老手",desc:"累積啟動 50 次申報",ok:r=>r.length>=50},
- {id:"weekend",icon:"🗓️",name:"週末勇者",desc:"曾在週六或週日啟動申報",ok:r=>r.some(v=>v.isHoliday&&!v.isNationalHoliday)},
- {id:"red",icon:"🎉",name:"見紅出勤",desc:"曾在國定假日或補假啟動申報",ok:r=>r.some(v=>v.isNationalHoliday)},
- {id:"months",icon:"📆",name:"跨月玩家",desc:"至少 3 個不同月份使用過申報工具",ok:r=>new Set(r.map(v=>v.date.slice(0,7))).size>=3}
+ {id:"first",icon:"🚀",name:"首次出擊",rarity:"common",desc:"完成第一次加班申報",ok:r=>r.length>=1},
+ {id:"three",icon:"3️⃣",name:"小試身手",rarity:"common",desc:"累積申報 3 次",ok:r=>r.length>=3},
+ {id:"five",icon:"✋",name:"五連星",rarity:"common",desc:"累積申報 5 次",ok:r=>r.length>=5},
+ {id:"ten",icon:"🔟",name:"十次達陣",rarity:"rare",desc:"累積申報 10 次",ok:r=>r.length>=10},
+ {id:"twentyfive",icon:"🏅",name:"25 次里程碑",rarity:"epic",desc:"累積申報 25 次",ok:r=>r.length>=25},
+ {id:"fifty",icon:"🏆",name:"申報老手",rarity:"legendary",desc:"累積申報 50 次",ok:r=>r.length>=50},
+ {id:"hundred",icon:"💯",name:"百戰成鋼",rarity:"legendary",desc:"累積申報 100 次",ok:r=>r.length>=100},
+ {id:"weekend",icon:"🗓️",name:"週末勇者",rarity:"rare",desc:"曾在休息日申報",ok:r=>r.some(v=>kindOf(v)==="weekend")},
+ {id:"red",icon:"🎉",name:"見紅出勤",rarity:"epic",desc:"曾在國定假日或補假申報",ok:r=>r.some(v=>kindOf(v)==="national")},
+ {id:"bothholiday",icon:"🎊",name:"假日全勤型",rarity:"epic",desc:"休息日與國定假日都曾申報",ok:r=>r.some(v=>kindOf(v)==="weekend")&&r.some(v=>kindOf(v)==="national")},
+ {id:"months",icon:"📆",name:"跨月玩家",rarity:"rare",desc:"至少 3 個不同月份使用申報工具",ok:r=>new Set(r.map(v=>v.date.slice(0,7))).size>=3},
+ {id:"halfyear",icon:"🗓️",name:"半年同行",rarity:"epic",desc:"至少 6 個不同月份有申報紀錄",ok:r=>new Set(r.map(v=>v.date.slice(0,7))).size>=6},
+ {id:"longday",icon:"⏱️",name:"今天很漫長",rarity:"rare",desc:"單次實際加班達 8 小時",ok:r=>r.some(v=>parseHours(v)>=8)},
+ {id:"tenhours",icon:"🌙",name:"長夜未央",rarity:"epic",desc:"單次實際加班達 10 小時",ok:r=>r.some(v=>parseHours(v)>=10)},
+ {id:"weekday",icon:"💼",name:"平日戰士",rarity:"common",desc:"完成一次平日加班申報",ok:r=>r.some(v=>kindOf(v)==="weekday")},
+ {id:"streak3",icon:"🔥",name:"三連勤",rarity:"rare",desc:"連續 3 個不同日期都有申報",ok:r=>hasDateStreak(r,3)},
+ {id:"streak5",icon:"🔥",name:"五日連戰",rarity:"epic",desc:"連續 5 個不同日期都有申報",ok:r=>hasDateStreak(r,5)},
+ {id:"equiv20",icon:"⚖️",name:"倍率有感",rarity:"rare",desc:"單次等值基本時數達 20 小時",ok:r=>r.some(v=>equivalentHours(parseHours(v),kindOf(v))>=20)},
+ {id:"findit",icon:"🕵️",name:"你怎麼找到這個的？",rarity:"hidden",secret:true,desc:"短時間內切入成就區塊 10 次",ok:(r,s)=>((s.achievementVisits||[]).filter(t=>Date.now()-t<=30000).length>=10)},
+ {id:"qa",icon:"🧪",name:"品質工程師",rarity:"hidden",secret:true,desc:"同一天操作申報、紀錄、成就、設定四個主要功能區塊",ok:(r,s)=>["declare","records","achievements","settings"].every(k=>s.sections&&s.sections[k])},
+ {id:"logo",icon:"👆",name:"不要再按了",rarity:"hidden",secret:true,desc:"連續點 Logo 10 次",ok:(r,s)=>(s.logoTaps||[]).filter(t=>Date.now()-t<=15000).length>=10},
+ {id:"version",icon:"🔎",name:"這裡一定有東西",rarity:"hidden",secret:true,desc:"連續點版本號 7 次",ok:(r,s)=>(s.versionTaps||[]).filter(t=>Date.now()-t<=15000).length>=7},
+ {id:"again",icon:"🔁",name:"再看一次",rarity:"hidden",secret:true,desc:"同一天多次切回紀錄區塊",ok:(r,s)=>(s.recordsVisits||0)>=5},
+ {id:"tester",icon:"🧰",name:"你是來測試的吧",rarity:"hidden",secret:true,desc:"同一天解鎖 3 種不同操作型隱藏成就",ok:(r,s,u)=>["findit","qa","logo","version","again"].filter(id=>u.has(id)).length>=3},
+ {id:"allround",icon:"🌟",name:"全能申報者",rarity:"legendary",desc:"已解鎖至少 15 個成就",ok:(r,s,u)=>u.size>=15}
 ];
-function renderAchievements(){const r=records(),unlocked=ACH.filter(a=>a.ok(r)).length;$("statTotal").textContent=r.length;$("statHoliday").textContent=r.filter(v=>v.isHoliday).length;$("statUnlocked").textContent=`${unlocked}/${ACH.length}`;$("achievementProgress").style.width=`${Math.round(unlocked/ACH.length*100)}%`;$("achievementGrid").innerHTML=ACH.map(a=>{const ok=a.ok(r);return `<div class="achievement ${ok?"unlocked":""}"><div class="icon">${a.icon}</div><div class="name">${a.name}</div><div class="desc">${a.desc}</div><div class="status">${ok?"✅ 已解鎖":"🔒 尚未解鎖"}</div></div>`}).join("")}
+let modalQueue=[];
+function showNextModal(){if(!$('achievementModal').classList.contains('hidden')||!modalQueue.length)return;const a=modalQueue.shift();$('modalIcon').textContent=a.icon;$('modalName').textContent=a.name;$('modalRarity').textContent=`${RARITY[a.rarity]}成就`;$('modalText').textContent=`成就解鎖：${a.desc}`;$('achievementModal').classList.remove('hidden')}
+$('modalClose').onclick=()=>{$('achievementModal').classList.add('hidden');showNextModal()};
+function pendingAchievements(){try{return JSON.parse(localStorage.getItem(userScopedKey('ot46_pending_achievements'))||'[]')}catch{return[]}}
+function savePendingAchievements(v){localStorage.setItem(userScopedKey('ot46_pending_achievements'),JSON.stringify(v))}
+function checkAchievements(){const r=records(),s=opState(),u=unlockedSet(),pending=pendingAchievements();let changed=true;while(changed){changed=false;for(const a of ACH){if(!u.has(a.id)&&a.ok(r,s,u)){u.add(a.id);if(!pending.includes(a.id))pending.push(a.id);changed=true}}}saveUnlocked(u);savePendingAchievements(pending);renderAchievements()}
+function showDeferredAchievements(){const pending=pendingAchievements();if(!pending.length)return;modalQueue=pending.map(id=>ACH.find(a=>a.id===id)).filter(Boolean);savePendingAchievements([]);showNextModal()}
+function renderAchievements(){const r=records(),u=unlockedSet();$('statTotal').textContent=r.length;$('statHoliday').textContent=r.filter(v=>kindOf(v)!=="weekday").length;$('statUnlocked').textContent=`${u.size}/${ACH.length}`;$('achievementProgress').style.width=`${Math.round(u.size/ACH.length*100)}%`;$('achievementGrid').innerHTML=ACH.map(a=>{const ok=u.has(a.id);return `<div class="achievement ${ok?'unlocked':''} ${a.secret?'secret':''}"><div class="icon">${ok||!a.secret?a.icon:'❓'}</div><div class="name">${ok||!a.secret?a.name:'隱藏成就'}</div><div class="rarity">${ok?RARITY[a.rarity]:'???'}</div><div class="desc">${ok||!a.secret?a.desc:'尚未發現解鎖條件'}</div><div class="status">${ok?'✅ 已解鎖':'🔒 尚未解鎖'}</div></div>`}).join('')}
+function periodRange(now=dateFromIso(todayIso())){const end=new Date(now.getFullYear(),now.getMonth(),25);let target=end;if(now.getDate()>25)target=new Date(now.getFullYear(),now.getMonth()+1,25);return{start:new Date(target.getFullYear(),target.getMonth()-1,26),end:target}}
+function shortDate(d){return `${d.getMonth()+1}/${d.getDate()}`}
+function renderStats(){const {start,end}=periodRange(),a=isoDate(start),b=isoDate(end),items=records().filter(v=>v.date>=a&&v.date<=b).map(v=>{const hours=parseHours(v);return{...v,hours,eq:equivalentHours(hours,kindOf(v))}});const total=items.reduce((s,v)=>s+v.hours,0),eq=items.reduce((s,v)=>s+v.eq,0);$('statsPeriod').textContent=`${shortDate(start)} ～ ${shortDate(end)}`;$('statHours').textContent=`${total.toFixed(1)}h`;$('statEquivalent').textContent=`${eq.toFixed(2)}h`;$('statDays').textContent=items.length;$('weekdayHours').textContent=`${items.filter(v=>kindOf(v)==='weekday').reduce((s,v)=>s+v.hours,0).toFixed(1)} 小時`;$('weekendHours').textContent=`${items.filter(v=>kindOf(v)==='weekend').reduce((s,v)=>s+v.hours,0).toFixed(1)} 小時`;$('nationalHours').textContent=`${items.filter(v=>kindOf(v)==='national').reduce((s,v)=>s+v.hours,0).toFixed(1)} 小時`;const max=Math.max(1,...items.map(v=>v.hours));$('hoursChart').innerHTML=items.length?items.map(v=>`<div class="barWrap" title="${v.date}：${v.hours.toFixed(1)}h / 等值 ${v.eq.toFixed(2)}h"><div class="bar ${kindOf(v)==='weekend'?'weekendBar':kindOf(v)==='national'?'nationalBar':''}" style="height:${Math.max(3,v.hours/max*120)}px"></div><div class="barLabel">${Number(v.date.slice(8))}</div></div>`).join(''):'<div class="note" style="align-self:center;width:100%;text-align:center">目前區間沒有申報紀錄</div>';renderRecords(items)}
+function renderRecords(items){$('recordList').innerHTML=items.length?[...items].reverse().map(v=>`<div class="recordItem"><div class="recordTop"><span>${v.date}</span><span>${v.hours.toFixed(1)}h → ${v.eq.toFixed(2)}h</span></div><div class="note">${v.type.split(' Foreign')[0]}｜${v.time}｜休息 ${v.breakHours}h</div></div>`).join(''):'尚無申報紀錄'}
+function renderAdmin(){const p=profile();if(p.role!=="admin")return;const u=cachedUsers(),r=records(),e=errorLogs(),un=unlockedSet();
+ const di=dayInfo(),src=$('adminHolidaySource'),today=$('adminHolidayToday');
+ if(src)src.textContent=di.holidaySource||'-';
+ if(today)today.textContent=di.isNationalHoliday?(di.holidayName||'國定假日'):(di.isWeekend?'週末':'平日');$('adminUsers').textContent=u.length;$('adminRecords').textContent=r.length;$('adminErrors').textContent=e.length;$('adminAchCount').textContent=ACH.length;$('adminUnlockedCount').textContent=un.size;$('adminUserList').innerHTML=u.length?u.map(v=>`<div class="logItem"><b>${v.emp}</b>｜${v.name}<div class="tiny">最近登入：${v.lastLogin||'-'}</div></div>`).join(''):'目前沒有使用者';$('adminRecordList').innerHTML=r.length?[...r].reverse().slice(0,30).map(v=>`<div class="logItem"><b>${v.date}</b>｜${String(v.type).split(' Foreign')[0]}<div class="tiny">${v.time}｜休息 ${v.breakHours}h</div></div>`).join(''):'目前沒有申報紀錄';$('adminErrorList').innerHTML=e.length?[...e].reverse().slice(0,30).map(v=>`<div class="logItem"><span class="logCode">${v.code}</span>｜${v.module}<div>${v.message}</div><div class="tiny">${v.time}｜${JSON.stringify(v.detail||{})}</div></div>`).join(''):'✅ 目前沒有錯誤紀錄'}
+function render(){const p=profile(),has=!!p.emp&&!!p.name;document.body.classList.toggle('isAdmin',p.role==='admin');$('setup').classList.toggle('hidden',has);$('app').classList.toggle('hidden',!has);if(!has)return;const x=vals(),h=hoursFromVals(x),eq=equivalentHours(h,x.isNationalHoliday?'national':x.isWeekend?'weekend':'weekday');$('vName').textContent=x.name;$('vEmp').textContent=x.emp;$('vDepartment').textContent=x.department||'-';$('vShiftSchedule').textContent=`${x.shift==='NIGHT'?'夜班':'日班'} / ${x.scheduleType==='REGULAR'?'常日/夜':x.scheduleType}`;$('vDate').textContent=x.startIso||x.iso;$('vTime').textContent=String(x.sh).padStart(2,'0')+':'+String(x.sm).padStart(2,'0')+'–'+String(x.eh).padStart(2,'0')+':'+String(x.em).padStart(2,'0');$('vType').textContent=x.type.split(' Foreign')[0];$('vBreak').textContent=`${x.brk} 小時`;$('currentHours').textContent=`${h.toFixed(1)}h`;$('currentEquiv').textContent=`等值基本時數 ${eq.toFixed(2)}h`;const b=$('dayBadge');if(['42A','42B','42C'].includes(x.scheduleType)){b.textContent=`🔄 ${x.scheduleType}｜${x.isWorkDay?'工作日':'休息日'}｜${x.overtimeCode}`;b.className='dayBadge '+(x.isWorkDay?'weekday':'weekend');}else if(x.isNationalHoliday){b.textContent=`🎉 ${x.holidayName}｜60 國定假日加班`;b.className='dayBadge holiday';$('ruleNote').textContent=`${x.holidayName}：60國定假日加班。`}else if(x.isWeekend){b.textContent='🗓️ 週末｜25 休息日加班';b.className='dayBadge weekend';$('ruleNote').textContent='週六／週日：25休息日加班。'}else{b.textContent='💼 平日｜10 平日加班';b.className='dayBadge weekday';$('ruleNote').textContent='一般工作日：10平日加班。'}renderStats();renderAchievements();renderAdmin();if(p.role!=='admin')refreshAdminEligibility()}
+$('localLogin').onclick=async()=>{
+ const emp=$('emp').value.trim().toUpperCase(),second=$('name').value.trim();
+ if(!emp||!second){$('loginState').textContent='❌ 請輸入工號與姓名';return}
+ const btn=$('localLogin');btn.disabled=true;$('loginState').textContent='⏳ 驗證中…';
+ try{
+   const validation=await validateRegistrationBackend(emp,second);
+   if(!validation||validation.ok!==true){$('loginState').textContent='❌ '+((validation&&validation.error)||'工號格式不正確');return}
+   const login=await loginBackend(emp,second);
+   if(!login||login.ok!==true||login.loggedIn!==true){$('loginState').textContent='❌ '+((login&&login.error)||'工號或姓名不正確');return}
+   if(!login.department||!login.shift||!login.scheduleType){$('loginState').textContent='❌ 帳號資料尚未完成設定，請聯絡管理員';return}
+   const finalEmp=login.employeeId||validation.employeeId||emp,finalName=login.name||validation.name||second;
+   localStorage.setItem('ot45_emp',finalEmp);localStorage.setItem('ot45_name',finalName);localStorage.setItem('ot45_role','user');localStorage.setItem('ot46_department',login.department||'');localStorage.setItem('ot46_shift',login.shift||'');localStorage.setItem('ot46_schedule',login.scheduleType||'');setAdminSession('');rememberCachedUser(finalEmp,finalName);
+   $('loginState').textContent='⏳ 登入成功，正在同步紀錄與日期…';
+   const synced=await syncRecordsFromBackend(finalEmp,finalName);backendDay=null;await syncBackendDay();
+   $('loginState').textContent='✅ 登入成功｜已同步 '+synced+' 筆紀錄';
+   render();await refreshAdminEligibility();switchTab('declare');
+ }catch(err){
+   $('loginState').textContent='❌ 系統連線失敗，請稍後再試';
+   logError('API-LOGIN-001','registration',String(err&&err.message||err),{endpoint:'PRODUCTION'});
+ }finally{btn.disabled=false}
+};
+$('localRegister').onclick=async()=>{
+ const emp=$('emp').value.trim().toUpperCase(),name=$('name').value.trim(),department=$('department').value,shift=$('shift').value,scheduleType=$('scheduleType').value;
+ if(!emp||!name){$('loginState').textContent='❌ 請輸入工號與姓名';return}
+ const btn=$('localRegister');btn.disabled=true;$('loginState').textContent='⏳ 註冊中…';
+ try{
+   const r=await registerBackend(emp,name,department,shift,scheduleType);
+   if(!r||r.ok!==true){$('loginState').textContent='❌ '+((r&&r.error)||'註冊失敗');return}
+   $('loginState').textContent='✅ 註冊完成，請按登入';
+ }catch(err){
+   try{
+     const verify=await loginBackend(emp,name);
+     const sameProfile=verify&&verify.ok===true&&verify.loggedIn===true&&
+       String(verify.department||'')===String(department||'')&&
+       String(verify.shift||'').toUpperCase()===String(shift||'').toUpperCase()&&
+       String(verify.scheduleType||'').toUpperCase()===String(scheduleType||'').toUpperCase();
+     if(sameProfile){
+       $('loginState').textContent='✅ 註冊完成，請按登入';
+       logError('API-REG-POST-ACK','registration','註冊已寫入，但 POST 回應未成功讀取；已由登入 API 二次確認',{employeeId:emp});
+       return;
+     }
+   }catch(verifyErr){
+     logError('API-REG-VERIFY-001','registration',String(verifyErr&&verifyErr.message||verifyErr),{employeeId:emp});
+   }
+   $('loginState').textContent='❌ 註冊連線失敗，請稍後再試';
+   logError('API-REG-001','registration',String(err&&err.message||err),{employeeId:emp});
+ }finally{btn.disabled=false}
+};
+$('simulate').onclick=()=>{
+  const btn=$('simulate');if(btn.disabled)return;btn.disabled=true;
+  const fresh=vals(),p=profile(),formUrl=buildGoogleFormUrl(fresh);
+  markOp('declare');checkAchievements();
+  // best-effort 紀錄；不 await。重複只在後端略過，不回前端彈窗。
+  try{fetch(BACKEND_API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({action:'declare',employeeId:p.emp,name:p.name,date:fresh.iso,time:`${fresh.sh}:${fresh.sm}-${fresh.eh}:${fresh.em}`,startDate:fresh.startIso,endDate:fresh.endIso,breakHours:fresh.brk,type:fresh.type,holidayName:fresh.holidayName||''}),keepalive:true,cache:'no-store'}).catch(()=>{});}catch{}
+  // 關鍵路徑：立即開 Forms，不等待後端查重、統計、成就。
+  location.href=formUrl;
+  setTimeout(()=>{btn.disabled=false},1200);
+};
+function switchTab(tab){if(tab==='admin'&&profile().role!=='admin'){logError('AUTH-ADMIN-403','authorization','非管理員嘗試開啟管理頁');return}document.querySelectorAll('.tab').forEach(el=>el.classList.add('hidden'));$(`tab-${tab}`).classList.remove('hidden');document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));if(tab==='achievements')tapCounter('achievementVisits',10,30000);markOp(tab)}
+document.querySelectorAll('.nav button').forEach(b=>b.onclick=()=>switchTab(b.dataset.tab));
+$('logout').onclick=async()=>{const t=adminToken();if(t){try{await adminPost('adminLogout',{sessionToken:t})}catch{}}setAdminSession('');['ot45_emp','ot45_name','ot45_role','ot46_department','ot46_shift','ot46_schedule','ot45_records'].forEach(k=>localStorage.removeItem(k));render()};
 
-function render(){const p=profile(),has=hasLocalSession();$("setup").classList.toggle("hidden",has);$("main").classList.toggle("hidden",!has);$("achievementCard").classList.toggle("hidden",!has);$("statsCard").classList.toggle("hidden",!has);if(!has)return;const x=vals();$("vName").textContent=x.name;$("vEmp").textContent=x.emp;$("vDate").textContent=x.iso;$("vTime").textContent=`${x.sh}:${x.sm}–${x.eh}:${x.em}`;$("vType").textContent=x.type;$("vBreak").textContent=x.brk;const badge=$("dayBadge");if(x.isNationalHoliday){badge.textContent=`🎉 ${x.holidayName}｜假日出勤`;badge.className="dayBadge holiday";$("ruleNote").textContent=`今天是 ${x.holidayName}，已依見紅休規則自動套用假日申報。`}else if(x.isWeekend){badge.textContent="🗓️ 週末｜假日出勤";badge.className="dayBadge weekend";$("ruleNote").textContent="今天是週六／週日，已自動套用假日申報。"}else{badge.textContent="💼 平日出勤";badge.className="dayBadge weekday";$("ruleNote").textContent="今天是一般工作日，已自動套用平日申報。"}renderAchievements();renderStats()}
+$('adminLoginBtn').onclick=async()=>{
+ const p=profile(),pw=$('adminPassword').value;
+ if(!pw){$('adminLoginState').textContent='❌ 請輸入管理員密碼';return}
+ const btn=$('adminLoginBtn');btn.disabled=true;$('adminLoginState').textContent='⏳ 驗證管理員身分中…';
+ try{
+   const r=await adminPost('adminLogin',{employeeId:p.emp,name:p.name,password:pw});
+   if(!r||r.ok!==true){
+     $('adminLoginState').textContent='❌ '+((r&&r.error)||'管理員驗證失敗');
+     return;
+   }
+   setAdminSession(r.sessionToken||'');
+   localStorage.setItem('ot45_role','admin');
+   $('adminPassword').value='';
+   $('adminLoginState').textContent='✅ 管理員驗證成功';
+   render();switchTab('admin');
+ }catch(err){
+   $('adminLoginState').textContent='❌ 管理員登入失敗';
+   logError('ADMIN-LOGIN-001','admin',String(err&&err.message||err));
+ }finally{btn.disabled=false}
+};
+$('adminLogoutBtn').onclick=async()=>{
+ const t=adminToken();
+ try{if(t)await adminPost('adminLogout',{sessionToken:t})}catch{}
+ setAdminSession('');
+ localStorage.setItem('ot45_role','user');
+ document.body.classList.remove('isAdmin');
+ render();
+ switchTab('settings');
+};
 
-function logUsage(x,item){const logData={action:"log",employeeId:x.emp,name:x.name,date:x.iso,type:x.type,time:`${x.sh}:${x.sm}-${x.eh}:${x.em}`,dayType:x.isNationalHoliday?"national_holiday":x.isWeekend?"weekend":"weekday",holidayName:x.holidayName||"",breakHours:Number(x.brk)||0,recordKey:item&&item.key?item.key:""};const body=JSON.stringify(logData);try{const blob=new Blob([body],{type:"text/plain;charset=UTF-8"});if(navigator.sendBeacon(LOG_API,blob))return}catch(e){}try{fetch(LOG_API,{method:"POST",mode:"no-cors",keepalive:true,body})}catch(e){}}
 
-let authMode="login";
-function setAuthMode(mode){authMode=mode;const reg=mode==="register";$("authTitle").textContent=reg?"建立帳號":"登入";$("authHint").textContent=reg?"第一次使用請輸入工號與姓名完成註冊。之後這台瀏覽器會記住登入狀態。":"已註冊過請輸入工號與姓名登入。";$("save").textContent=reg?"註冊並登入":"登入";$("switchAuth").textContent=reg?"已有帳號？登入":"第一次使用？註冊";$("verifyState").textContent=""}
-$("switchAuth").onclick=()=>setAuthMode(authMode==="login"?"register":"login");
-$("save").onclick=async()=>{const emp=$("emp").value.trim(),name=$("name").value.trim();if(!emp||!name){alert("請填寫工號與姓名");return}$("save").disabled=true;$("switchAuth").disabled=true;const ok=authMode==="register"?await registerAccount(emp,name):await loginAccount(emp,name,true);$("save").disabled=false;$("switchAuth").disabled=false;if(!ok)return;saveSession(emp,name);render();await syncFromBackend()};
-$("edit").onclick=()=>{const p=profile();if(!confirm("確定要登出並切換帳號嗎？"))return;clearSession();render();$("emp").value=p.emp;$("name").value="";setAuthMode("login")};
-$("openForm").onclick=()=>{const x=vals(),p=new URLSearchParams();const item=saveRecord(x);logUsage(x,item);p.set("entry.1887212512",x.emp);p.set("entry.1368827355",x.name);p.set("entry.2142121907","加班(Overtime)");p.set("entry.1845535146","0");p.set("entry.941474327","PAY");p.set("entry.1804705995",x.type);p.set("entry.1261519849",x.iso);p.set("entry.1086690423",x.sh);p.set("entry.213940732",x.sm);p.set("entry.1429136936",x.iso);p.set("entry.389667626",x.eh);p.set("entry.710216474",x.em);p.set("entry.1721870764","配合生產");p.set("entry.165856962",x.brk);location.href=BASE+"&"+p.toString()};
-$("syncNow").onclick=()=>syncFromBackend();
-render();
-if(hasLocalSession()){
- (async()=>{const p=profile();const ok=await loginAccount(p.emp,p.name,false);if(!ok){clearSession();render();setAuthMode("login");$("verifyState").textContent="⚠️ 已儲存的登入失效，請重新登入";return}syncFromBackend(false)})();
-}else setAuthMode("login");
+$('appLogo').onclick=()=>tapCounter('logoTaps',10,15000);$('versionTap').onclick=()=>tapCounter('versionTaps',7,15000);
+async function runBackendDiagnostics(){const u=new URL(BACKEND_API);u.searchParams.set('action','diagnostics');return await getJson(u.toString(),{cache:'no-store'});}
+async function exportBackendDiagnosticLog(){const u=new URL(BACKEND_API);u.searchParams.set('action','exportDiagnosticLog');const r=await getJson(u.toString(),{cache:'no-store'});if(!r||!r.ok)throw new Error((r&&r.error)||'LOG_EXPORT_FAILED');const blob=new Blob([r.content||'[]'],{type:r.mimeType||'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=r.fileName||'overtime-diagnostic-log.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);return r;}
+window.otDiagnostics={run:runBackendDiagnostics,exportLog:exportBackendDiagnosticLog,localLogs:errorLogs};
+(async()=>{await loadSystemConfig();await restoreAdminSession();render();if(!$('app').classList.contains('hidden'))switchTab(profile().role==='admin'?'admin':'declare');const p=profile();if(p.emp&&p.name){syncRecordsFromBackend(p.emp,p.name).then(()=>{checkAchievements();setTimeout(showDeferredAchievements,300)}).catch(()=>{checkAchievements();setTimeout(showDeferredAchievements,300)});}else setTimeout(showDeferredAchievements,500)})();
 })();
-</script></body></html>
+</script>
+</body></html>
