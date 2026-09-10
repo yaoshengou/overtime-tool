@@ -386,10 +386,24 @@ $('localLogin').onclick=async()=>{
    if(!login.department||!login.shift||!login.scheduleType){$('loginState').textContent='❌ 帳號資料尚未完成設定，請聯絡管理員';return}
    const finalEmp=login.employeeId||validation.employeeId||emp,finalName=login.name||validation.name||second;
    localStorage.setItem('ot45_emp',finalEmp);localStorage.setItem('ot45_name',finalName);localStorage.setItem('ot45_role','user');localStorage.setItem('ot46_department',login.department||'');localStorage.setItem('ot46_shift',login.shift||'');localStorage.setItem('ot46_schedule',login.scheduleType||'');setAdminSession('');rememberCachedUser(finalEmp,finalName);
-   $('loginState').textContent='⏳ 登入成功，正在同步紀錄與日期…';
-   const synced=await syncRecordsFromBackend(finalEmp,finalName);backendDay=null;await syncBackendDay();
-   $('loginState').textContent='✅ 登入成功｜已同步 '+synced+' 筆紀錄';
-   render();await refreshAdminEligibility();switchTab('declare');
+   $('loginState').textContent='✅ 登入成功';
+   render();switchTab('declare');
+   refreshAdminEligibility().catch(err=>logError('API-ADMIN-ELIGIBILITY-001','registration',String(err&&err.message||err),{endpoint:'PRODUCTION'}));
+   (async()=>{
+     let lastErr=null;
+     for(let attempt=0;attempt<3;attempt++){
+       try{
+         const synced=await syncRecordsFromBackend(finalEmp,finalName);backendDay=null;await syncBackendDay();
+         $('loginState').textContent='✅ 登入成功｜已同步 '+synced+' 筆紀錄';
+         render();
+         return;
+       }catch(syncErr){
+         lastErr=syncErr;
+         if(attempt<2)await sleep(attempt===0?2000:5000);
+       }
+     }
+     logError('API-LOGIN-SYNC-001','registration',String(lastErr&&lastErr.message||lastErr),{endpoint:'PRODUCTION',retries:2});
+   })();
  }catch(err){
    $('loginState').textContent='❌ 系統連線失敗，請稍後再試';
    logError('API-LOGIN-001','registration',String(err&&err.message||err),{endpoint:'PRODUCTION'});
