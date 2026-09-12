@@ -87,7 +87,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC",sans
 
   
   <div class="card" id="releaseNotesCard"><div class="sectionTitle">📝 v5.0 更新內容</div>
-    <div class="versionItem"><div class="versionHead"><b>v5.0 正式版</b><span>v5.0</span></div><div class="note">外籍員工 20/63 + SUPPORT PRODUCTION、資料一致性與索引、註冊鎖定、前後端規則版本同步、管理員專用一鍵系統診斷。</div></div>
+    <div class="versionItem"><div class="versionHead"><b>v5.0 正式版</b><span>v5.0</span></div><div class="note">新增外籍員工加班申報選項</div></div>
     <div class="versionItem">
       <div class="versionHead"><b>夜班早班下班日期歸屬修正</b><span>v4.8.1</span></div>
       <div class="note">夜班於 00:00–19:59 申報時，以前一天 20:00 的班次起始日判斷平日／休息日／國定假日；平日夜班的實際加班日期仍填入下班當日 05:00–08:00。日班邏輯不變。</div>
@@ -461,14 +461,14 @@ function applyForeignLanguage(p){
  if(rn){
    const items=rn.querySelectorAll('.versionItem');
    const en=[
-    ['v5.0 production','Foreign employees: codes 20/63 + SUPPORT PRODUCTION; data consistency and indexing; registration locking; frontend/backend rule-version synchronization; one-click system diagnostics.'],
+    ['v5.0 production','Added overtime declaration options for foreign employees.'],
     ['Night-shift attribution fix','For night shifts declared from 00:00–19:59, the shift-start date is the previous day at 20:00 and is used to determine work day / rest day / national holiday. Weekday night overtime is still entered on the clock-out date from 05:00–08:00. Day-shift logic is unchanged.'],
     ['42 schedule support','Added 42A / 42B / 42C schedules with automatic work-day and rest-day determination using the 4-on / 2-off cycle.'],
     ['Night-shift declaration support','Added night-shift rules for weekday overtime 05:00–08:00 and rest-day overtime 20:00–08:00 the next day.'],
     ['Department / shift settings','Added department, day/night shift and schedule profile data. After login, the matching declaration rules are applied automatically.']
    ];
    const zh=[
-    ['v5.0 正式版','外籍員工 20/63 + SUPPORT PRODUCTION、資料一致性與索引、註冊鎖定、前後端規則版本同步、管理員專用一鍵系統診斷。'],
+    ['v5.0 正式版','新增外籍員工加班申報選項'],
     ['夜班早班下班日期歸屬修正','夜班於 00:00–19:59 申報時，以前一天 20:00 的班次起始日判斷平日／休息日／國定假日；平日夜班的實際加班日期仍填入下班當日 05:00–08:00。日班邏輯不變。'],
     ['42 輪班支援','新增 42A／42B／42C 班型，依 4 上 2 休循環自動判斷工作日與休息日。'],
     ['夜班申報支援','新增夜班申報規則，支援平日 05:00–08:00 與休息日 20:00–隔日 08:00 的申報時段。'],
