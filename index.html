@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#111827">
-<title>加班申報工具 v4.8</title>
+<title>加班申報工具 v5.0</title>
 <style>
 body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC",sans-serif;background:#f5f7fb;margin:0;color:#111827}.wrap{max-width:600px;margin:auto;padding:20px 16px 40px}.card{background:#fff;border:1px solid #e5e7eb;border-radius:18px;padding:18px;margin-bottom:14px}h1{font-size:24px;margin:0 0 6px}.sub,.note{color:#6b7280;font-size:13px;line-height:1.6}.sub{margin-bottom:12px}.field{margin-bottom:14px}.field label{display:block;font-size:14px;color:#6b7280;margin-bottom:6px}input,select{width:100%;padding:14px;border:1px solid #e5e7eb;border-radius:12px;font-size:16px;box-sizing:border-box}.row{display:flex;justify-content:space-between;gap:16px;padding:11px 0;border-bottom:1px solid #e5e7eb}.row:last-child{border-bottom:0}.label{color:#6b7280}.value{text-align:right;font-weight:600;max-width:68%}button{width:100%;padding:14px;border:0;border-radius:14px;font-size:16px;font-weight:700;margin-top:10px;cursor:pointer}.primary{background:#111827;color:#fff}.secondary{background:#eef0f4;color:#111827}.danger{background:#fee2e2;color:#991b1b}.hidden{display:none!important}.dayBadge{display:inline-block;padding:6px 10px;border-radius:999px;font-size:13px;font-weight:700;background:#eef0f4;margin:0 0 12px}.holiday{background:#fee2e2;color:#991b1b}.weekend{background:#fff7ed;color:#9a3412}.weekday{background:#ecfdf5;color:#065f46}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}.stat{background:#f8fafc;border-radius:14px;padding:12px;text-align:center}.stat b{display:block;font-size:20px}.stat span{font-size:12px;color:#6b7280}.sectionTitle{font-size:18px;font-weight:800;margin:0}.period{font-size:13px;color:#6b7280;margin-top:5px}.achievementGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}.achievement{border:1px solid #e5e7eb;border-radius:14px;padding:12px;opacity:.42;background:#f8fafc}.achievement.unlocked{opacity:1;background:#fff}.achievement.secret:not(.unlocked) .name,.achievement.secret:not(.unlocked) .desc{filter:blur(5px)}.achievement .icon{font-size:25px}.achievement .name{font-weight:800;margin-top:5px}.achievement .desc{font-size:12px;color:#6b7280;margin-top:3px;line-height:1.45}.achievement .status{font-size:11px;font-weight:700;margin-top:8px}.rarity{font-size:10px;font-weight:800;margin-top:5px;color:#6b7280}.unlocked .status{color:#047857}.progress{height:8px;background:#e5e7eb;border-radius:999px;overflow:hidden;margin-top:10px}.progress>div{height:100%;background:#111827}.nav{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:14px;position:sticky;top:6px;z-index:5}.nav button{margin:0;padding:10px 4px;font-size:13px;background:#fff;border:1px solid #e5e7eb}.nav button.active{background:#111827;color:#fff}.chart{display:flex;align-items:flex-end;gap:5px;height:150px;padding:14px 2px 0;border-bottom:1px solid #e5e7eb;overflow-x:auto}.barWrap{min-width:22px;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center}.bar{width:18px;background:#38bdf8;border-radius:5px 5px 0 0;min-height:2px;border:1px solid rgba(255,255,255,.45);box-shadow:0 0 8px rgba(255,255,255,.10)}.bar.weekendBar{background:#fbbf24}.bar.nationalBar{background:#fb7185}.barLabel{font-size:10px;color:#f8fafc;margin-top:5px;font-weight:800}.recordItem{padding:10px 0;border-bottom:1px solid #e5e7eb;font-size:13px}.recordItem:last-child{border-bottom:0}.recordTop{display:flex;justify-content:space-between;gap:10px;font-weight:700}.equivBox{margin-top:12px;background:#f8fafc;border-radius:14px;padding:13px}.equivBox b{font-size:20px}.modalBack{position:fixed;inset:0;background:rgba(17,24,39,.55);display:flex;align-items:center;justify-content:center;padding:20px;z-index:50}.modal{background:#fff;border-radius:20px;padding:22px;width:min(390px,100%);text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.25)}.modalIcon{font-size:52px}.modalTitle{font-size:22px;font-weight:900;margin:8px 0}.modalRarity{font-size:12px;font-weight:800;color:#6b7280;margin-bottom:10px}.modalText{font-size:14px;color:#475569;line-height:1.6}.versionItem{padding:10px 0;border-bottom:1px solid #e5e7eb}.versionHead{display:flex;justify-content:space-between;gap:12px}.versionHead span{font-size:12px;color:#6b7280}.adminBadge{display:inline-block;background:#ede9fe;color:#5b21b6;padding:5px 9px;border-radius:999px;font-size:12px;font-weight:800;margin-left:6px}.logItem{padding:10px 0;border-bottom:1px solid #e5e7eb;font-size:13px}.logItem:last-child{border-bottom:0}.logCode{font-weight:900}.okText{color:#047857}.warnText{color:#b45309}.tiny{font-size:11px;color:#6b7280;word-break:break-all}.adminOnly{display:none}.isAdmin .adminOnly{display:block}@media(max-width:420px){.achievementGrid{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}.stats .stat:last-child{grid-column:1/-1}}
 
@@ -12,9 +12,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC",sans
 .nationalNotice{margin-top:16px;margin-bottom:4px;padding:14px 16px;border:2px solid #f59e0b;border-radius:14px;background:#fff7ed;color:#9a3412;font-size:14px;line-height:1.65;font-weight:700}.nationalNotice b{font-size:15px;color:#7c2d12}.nationalNotice .small{display:block;margin-top:4px;font-size:13px;font-weight:600;color:#9a3412}
 </style>
 </head>
-<body data-environment="PRODUCTION"><div class="wrap">
+<body data-environment="LOCAL_TEST"><div class="wrap">
 <h1 id="appLogo">加班申報工具</h1>
-<div class="sub">作者:Dano｜<span id="versionTap">v4.8</span></div>
+<div class="sub">作者:Dano｜<span id="versionTap">v5.0</span></div>
 <div id="setup" class="card">
  <div class="sectionTitle">登入</div>
  <div class="note" style="margin:6px 0 14px">請輸入工號與中文姓名。</div>
@@ -44,24 +44,24 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC",sans
    <div class="row"><span class="label">時間</span><span class="value" id="vTime"></span></div>
    <div class="row"><span class="label">加班類型</span><span class="value" id="vType"></span></div>
    <div class="row"><span class="label">休息</span><span class="value" id="vBreak"></span></div>
-   <div class="equivBox"><div class="note">本次換算</div><b id="currentHours">0h</b><div class="note" id="currentEquiv">等值基本時數 0h</div></div>
-   <div class="nationalNotice">
+   <div class="equivBox"><div class="note" id="currentCalcLabel">本次換算</div><b id="currentHours">0h</b><div class="note" id="currentEquiv">等值基本時數 0h</div></div>
+   <div id="holidayNotice" class="nationalNotice">
       ⚠️ <b>國定假日申報注意事項</b>
       <span class="small">一般班別可自動判斷國定假日；目前版本的 42A／42B／42C 輪班尚無法自動判斷國定假日。若 42 輪班遇到國定假日，請在送出前自行確認並手動修改為正確的國定假日加班項目。</span>
     </div>
-    <button class="primary" id="simulate">前往加班申報</button>
+    <div id="foreignNotice" class="nationalNotice hidden"><b>Foreign employee mode</b><span class="small">English UI enabled. Rest day = code 20, national holiday = code 63, reason = SUPPORT PRODUCTION. Statistics show actual overtime hours only.</span></div><button class="primary" id="simulate">前往加班申報</button>
   </div>
  </section>
 
  <section id="tab-records" class="tab hidden">
   <div class="card">
    <div class="sectionTitle">📊 加班統計</div><div class="period" id="statsPeriod"></div>
-   <div class="stats"><div class="stat"><b id="statHours">0h</b><span>實際加班</span></div><div class="stat"><b id="statEquivalent">0h</b><span>等值基本時數</span></div><div class="stat"><b id="statDays">0</b><span>加班天數</span></div></div>
+   <div class="stats"><div class="stat"><b id="statHours">0h</b><span>實際加班</span></div><div class="stat" id="statEquivalentBox"><b id="statEquivalent">0h</b><span>等值基本時數</span></div><div class="stat"><b id="statDays">0</b><span>加班天數</span></div></div>
    <div class="row"><span class="label">平日加班</span><span class="value" id="weekdayHours">0 小時</span></div>
    <div class="row"><span class="label">休息日加班</span><span class="value" id="weekendHours">0 小時</span></div>
    <div class="row"><span class="label">國定假日加班</span><span class="value" id="nationalHours">0 小時</span></div>
    <div class="chart" id="hoursChart"></div>
-   <div class="note" style="margin-top:10px">統計區間：前一個月 26 日～當月 25 日。等值基本時數依你的規則換算：平日 1.5 倍；週末／國定假日前 8 小時 2 倍，超過 8 小時部分 3 倍。</div>
+   <div class="note" id="statsRuleNote" style="margin-top:10px">統計區間：前一個月 26 日～當月 25 日。等值基本時數依你的規則換算：平日 1.5 倍；週末／國定假日前 8 小時 2 倍，超過 8 小時部分 3 倍。</div>
   </div>
   <div class="card"><div class="sectionTitle">🧾 申報紀錄</div><div id="recordList" class="note" style="margin-top:10px"></div></div>
  </section>
@@ -85,10 +85,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC",sans
    <div id="adminLoginState" class="note" style="margin-top:8px"></div>
   </div>
 
-  <div class="card"><div class="sectionTitle">📝 v4.8 更新內容</div>
+  
+  <div class="card" id="releaseNotesCard"><div class="sectionTitle">📝 v5.0 更新內容</div>
+    <div class="versionItem"><div class="versionHead"><b>v5.0 正式版</b><span>v5.0</span></div><div class="note">外籍員工 20/63 + SUPPORT PRODUCTION、資料一致性與索引、註冊鎖定、前後端規則版本同步、管理員專用一鍵系統診斷。</div></div>
     <div class="versionItem">
-      <div class="versionHead"><b>夜班早班下班日期歸屬修正</b><span>v4.8</span></div>
-      <div class="note">夜班於 00:00–11:59 申報時，以前一天 20:00 的班次起始日判斷平日／休息日／國定假日；平日夜班的實際加班日期仍填入下班當日 05:00–08:00。日班邏輯不變。</div>
+      <div class="versionHead"><b>夜班早班下班日期歸屬修正</b><span>v4.8.1</span></div>
+      <div class="note">夜班於 00:00–19:59 申報時，以前一天 20:00 的班次起始日判斷平日／休息日／國定假日；平日夜班的實際加班日期仍填入下班當日 05:00–08:00。日班邏輯不變。</div>
     </div>
     <div class="versionItem">
       <div class="versionHead"><b>42 輪班支援</b><span>v4.7</span></div>
@@ -106,7 +108,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC",sans
   </section>
  <section id="tab-admin" class="tab hidden adminOnly">
   <div class="card"><div class="sectionTitle">🛠 管理控制台 <span class="adminBadge">ADMIN</span></div><div class="note" style="margin-top:6px">管理介面。</div><div class="stats"><div class="stat"><b id="adminUsers">0</b><span>使用者</span></div><div class="stat"><b id="adminRecords">0</b><span>申報紀錄</span></div><div class="stat"><b id="adminErrors">0</b><span>Error Log</span></div></div><button class="danger" id="adminLogoutBtn">登出管理員</button></div>
-  <div class="card"><div class="sectionTitle">🚦 系統狀態</div><div class="row"><span class="label">版本</span><span class="value">v4.8</span></div><div class="row"><span class="label">環境</span><span class="value warnText">PRODUCTION</span></div><div class="row"><span class="label">Backend</span><span class="value okText">已連線</span></div><div class="row"><span class="label">資料寫入</span><span class="value okText">啟用</span></div></div>
+  <div class="card"><div class="sectionTitle">🚦 系統狀態</div><div class="row"><span class="label">版本</span><span class="value">v5.0</span></div><div class="row"><span class="label">環境</span><span class="value okText">PRODUCTION</span></div><div class="row"><span class="label">Backend</span><span class="value okText">已連線</span></div><div class="row"><span class="label">資料寫入</span><span class="value okText">啟用</span></div></div>
+  <div class="card"><div class="sectionTitle">🩺 系統診斷</div><div class="note" style="margin-top:6px">僅限管理員。一鍵檢查前端、Backend、Google Sheet、索引、假日、42、夜班與外籍規則；測試不寫入正式加班紀錄。</div><button class="secondary" id="runDiagnostics">一鍵自動系統診斷</button><div id="diagnosticState" class="note" style="margin-top:10px">尚未執行</div><div id="diagnosticList" class="note" style="margin-top:8px"></div></div>
   <div class="card"><div class="sectionTitle">📋 Error Log</div><div id="adminErrorList" class="note" style="margin-top:10px"></div></div>
   <div class="card"><div class="sectionTitle">👥 使用者管理</div><div id="adminUserList" class="note" style="margin-top:10px"></div></div>
   <div class="card"><div class="sectionTitle">🧾 紀錄管理</div><div id="adminRecordList" class="note" style="margin-top:10px"></div></div>
@@ -127,13 +130,18 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC",sans
 <script>
 (()=>{
 const $=id=>document.getElementById(id);
- const BACKEND_API='https://script.google.com/macros/s/AKfycbztCAN0jSTP47DHHuU9l9ZCDBGynh4ycOR2Kzftgfm3Qu_zKXfZR5BRyhdI0dIb5JkSZg/exec';
+ const PROD_BACKEND_API='https://script.google.com/macros/s/AKfycbztCAN0jSTP47DHHuU9l9ZCDBGynh4ycOR2Kzftgfm3Qu_zKXfZR5BRyhdI0dIb5JkSZg/exec';
+ const urlBackend=new URLSearchParams(location.search).get('backend')||'';
+ const IS_LOCAL_TEST=['localhost','127.0.0.1'].includes(location.hostname);
+ const BACKEND_API=urlBackend||PROD_BACKEND_API;
+ const EXPECTED_API_VERSION='5.0-api-1',EXPECTED_RULESET='5.0-r1-night-cutoff-20';
+ let backendCompatibility={checked:false,ok:false,message:'尚未確認 Backend 版本'};
  const FORM_BASE='https://docs.google.com/forms/d/e/1FAIpQLSeQlonRowaqwFUks_HoaSt0QonFOnfklRtmez8oIl3dWDzwVg/viewform?usp=pp_url';
  const API_TIMEOUT_MS=3000;
  const API_RETRIES=1;
  const HOLIDAY_CACHE_KEY='ot46_holiday_day_cache_v1';
  const SYSTEM_CONFIG_CACHE_KEY='ot46_system_config_v1';
- let systemConfig={nightShiftRuleMode:'ACTUAL_CROSS_DATE'};
+ let systemConfig={nightShiftRuleMode:'ACTUAL_CROSS_DATE',ruleSetVersion:EXPECTED_RULESET};
 
  function sleep(ms){return new Promise(r=>setTimeout(r,ms))}
  async function safeFetch(url,options={},timeoutMs=API_TIMEOUT_MS,retries=API_RETRIES){
@@ -159,10 +167,11 @@ const $=id=>document.getElementById(id);
  async function loginBackend(emp,name){const u=new URL(BACKEND_API);u.searchParams.set('action','login');u.searchParams.set('employeeId',emp);u.searchParams.set('name',name);return await getJson(u.toString(),{method:'GET',cache:'no-store'});}
  async function recordsBackend(emp,name){const u=new URL(BACKEND_API);u.searchParams.set('action','records');u.searchParams.set('employeeId',emp);u.searchParams.set('name',name);return await getJson(u.toString(),{method:'GET',cache:'no-store'});}
  async function systemConfigBackend(){const u=new URL(BACKEND_API);u.searchParams.set('action','systemConfig');return await getJson(u.toString(),{method:'GET',cache:'no-store'});}
- async function loadSystemConfig(){try{const r=await systemConfigBackend();if(r&&r.ok){systemConfig={nightShiftRuleMode:'ACTUAL_CROSS_DATE'};localStorage.setItem(SYSTEM_CONFIG_CACHE_KEY,JSON.stringify(systemConfig));return}}catch{}try{systemConfig=JSON.parse(localStorage.getItem(SYSTEM_CONFIG_CACHE_KEY)||'{}')||systemConfig}catch{}}
- async function registerBackend(emp,name,department,shift,scheduleType){const u=new URL(BACKEND_API);u.searchParams.set('action','register');u.searchParams.set('employeeId',emp);u.searchParams.set('name',name);u.searchParams.set('department',department);u.searchParams.set('shift',shift);u.searchParams.set('scheduleType',scheduleType);return await getJson(u.toString(),{method:'GET',cache:'no-store'},30000);}
+ async function healthBackend(){const u=new URL(BACKEND_API);u.searchParams.set('action','health');return await getJson(u.toString(),{method:'GET',cache:'no-store'},8000);}
+ async function loadSystemConfig(){try{const r=await healthBackend();backendCompatibility={checked:true,ok:!!(r&&r.ok&&r.apiVersion===EXPECTED_API_VERSION&&r.ruleSetVersion===EXPECTED_RULESET),message:r&&r.ok?`Backend ${r.apiVersion} / ${r.ruleSetVersion}`:'Backend health failed'};systemConfig={nightShiftRuleMode:'ACTUAL_CROSS_DATE',ruleSetVersion:r&&r.ruleSetVersion||''};}catch(e){backendCompatibility={checked:true,ok:false,message:String(e&&e.message||e)};}}
+ async function registerBackend(emp,name,department,shift,scheduleType){return await getJson(BACKEND_API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({action:'register',employeeId:emp,name,department,shift,scheduleType}),cache:'no-store'},30000);}
 
- function normalizeRemoteRecord(v){const date=String(v&&v.date||'').slice(0,10),type=String(v&&v.type||''),time=String(v&&v.time||''),dayType=String(v&&v.dayType||'');const isNationalHoliday=dayType==='national_holiday'||type.startsWith('60'),isWeekend=dayType==='weekend'||type.startsWith('25'),isHoliday=isNationalHoliday||isWeekend;return{date,type,time,breakHours:(v&&v.breakHours!==''&&v&&v.breakHours!=null)?Number(v.breakHours):(isHoliday?2:1),isNationalHoliday,isWeekend,isHoliday,holidayName:String(v&&v.holidayName||''),ts:Number(v&&v.ts)||Date.now(),recordKey:String(v&&v.recordKey||'')}}
+ function normalizeRemoteRecord(v){const date=String(v&&v.date||'').slice(0,10),type=String(v&&v.type||''),time=String(v&&v.time||''),dayType=String(v&&v.dayType||'');const isNationalHoliday=dayType==='national_holiday'||type.startsWith('60')||type.startsWith('63'),isWeekend=dayType==='weekend'||type.startsWith('25')||type.startsWith('20'),isHoliday=isNationalHoliday||isWeekend;return{date,type,time,breakHours:(v&&v.breakHours!==''&&v&&v.breakHours!=null)?Number(v.breakHours):(isHoliday?2:1),isNationalHoliday,isWeekend,isHoliday,holidayName:String(v&&v.holidayName||''),ts:Number(v&&v.ts)||Date.now(),recordKey:String(v&&v.recordKey||'')}}
  async function syncRecordsFromBackend(emp,name){const r=await recordsBackend(emp,name);if(!r||r.ok!==true||r.loggedIn!==true||!Array.isArray(r.records))throw new Error((r&&r.error)||'紀錄同步失敗');writeRecords(r.records.map(normalizeRemoteRecord));return r.records.length;}
 
 
@@ -259,7 +268,7 @@ function cachedUsers(){try{return JSON.parse(localStorage.getItem("ot45_users")|
 function saveCachedUsers(v){localStorage.setItem("ot45_users",JSON.stringify(v))}
 function rememberCachedUser(emp,name){let a=cachedUsers();const id=emp.toUpperCase(),old=a.find(v=>v.emp===id);if(old){old.name=name;old.lastLogin=new Date().toISOString()}else a.push({emp:id,name,createdAt:new Date().toISOString(),lastLogin:new Date().toISOString()});saveCachedUsers(a)}
 function errorLogs(){try{return JSON.parse(localStorage.getItem("ot45_error_logs")||"[]")}catch{return[]}}
-function logError(code,module,message,detail={}){const a=errorLogs();const traceId=`OT-WEB-${Date.now()}-${Math.random().toString(36).slice(2,8).toUpperCase()}`;a.push({time:new Date().toISOString(),traceId,code,module,message,detail,version:"4.8",emp:profile().emp||"",stack:(new Error()).stack||""});localStorage.setItem("ot45_error_logs",JSON.stringify(a.slice(-200)));renderAdmin()}
+function logError(code,module,message,detail={}){const a=errorLogs();const traceId=`OT-WEB-${Date.now()}-${Math.random().toString(36).slice(2,8).toUpperCase()}`;a.push({time:new Date().toISOString(),traceId,code,module,message,detail,version:"5.0",emp:profile().emp||"",stack:(new Error()).stack||""});localStorage.setItem("ot45_error_logs",JSON.stringify(a.slice(-200)));renderAdmin()}
 function todayIso(){return isoDate(new Date())}
 function dateFromIso(s){const [y,m,d]=s.split("-").map(Number);return new Date(y,m-1,d)}
 function nightShiftAttributionIso(p=profile(),now=new Date()){const today=isoDate(now);return p.shift==='NIGHT'&&now.getHours()<20?addDaysIso(today,-1):today}
@@ -274,6 +283,8 @@ function is42WorkDay(iso,scheduleType){
  if(scheduleType==='42C')return n<2||n>=4;
  return null;
 }
+function isForeignEmployee(p=profile()){return String((p&&p.emp)||'').trim().toUpperCase().endsWith('F')}
+function foreignTypeFor(code){return code===25?'20休息日加班(無交通費) Work overtime on holidays (no transportation expenses)':code===60?'63國定假日加班(無交通費) Work overtime on national holidays (no transportation expenses)':'10平日加班 Work overtime on weekdays'}
 function declarationPlan(iso,p,di){
  const is42=['42A','42B','42C'].includes(p.scheduleType);
  let workDay,code,type,isNationalHoliday=false,isWeekend=false,holidayName='';
@@ -285,7 +296,7 @@ function declarationPlan(iso,p,di){
    code=di.overtimeCode||10;
    isNationalHoliday=!!di.isNationalHoliday;isWeekend=!!di.isWeekend;holidayName=di.holidayName||'';
    workDay=code===10;
-   type=code===60?'60國定假日加班 Foreign employees select 63':code===25?'25休息日加班 Foreign employees select 20':'10平日加班 Work overtime on weekdays';
+   type=isForeignEmployee(p)?foreignTypeFor(code):(code===60?'60國定假日加班 Foreign employees select 63':code===25?'25休息日加班 Foreign employees select 20':'10平日加班 Work overtime on weekdays');
  }
  let sh='17',sm='00',eh='20',em='00',brk=1,startIso=iso,endIso=iso;
  if(p.shift==='NIGHT'){
@@ -293,7 +304,7 @@ function declarationPlan(iso,p,di){
    if(workDay){sh='05';eh='08';brk=1;startIso=iso;endIso=iso;}
    else{sh='20';eh='08';brk=2;startIso=iso;endIso=addDaysIso(iso,1);}
  }else if(!workDay){sh='08';eh='20';brk=2;}
- return{...p,...di,iso,startIso,endIso,sh,sm,eh,em,type,brk,overtimeCode:code,isWorkDay:workDay,isNationalHoliday,isWeekend,isHoliday:!workDay,holidayName,dayType:is42?(workDay?'weekday':'weekend'):(code===60?'national_holiday':code===25?'weekend':'weekday')};
+ const foreign=isForeignEmployee(p),formOvertimeCode=foreign?(code===25?20:code===60?63:10):code,formOvertimeType=foreign?foreignTypeFor(code):type;return{...p,...di,iso,startIso,endIso,sh,sm,eh,em,type,formOvertimeType,brk,overtimeCode:code,formOvertimeCode,isWorkDay:workDay,isNationalHoliday,isWeekend,isHoliday:!workDay,holidayName,dayType:is42?(workDay?'weekday':'weekend'):(code===60?'national_holiday':code===25?'weekend':'weekday')};
 }
 function vals(now=new Date()){
  const p=profile(),today=isoDate(now),attributionIso=nightShiftAttributionIso(p,now),di=dayInfo(attributionIso),x=declarationPlan(attributionIso,p,di);
@@ -312,14 +323,14 @@ function buildGoogleFormUrl(x){
  q.set("entry.2142121907","加班(Overtime)");
  q.set("entry.1845535146","0");
  q.set("entry.941474327","PAY");
- q.set("entry.1804705995",x.type);
+ q.set("entry.1804705995",x.formOvertimeType||x.type);
  q.set("entry.1261519849",x.startIso||x.iso);
  q.set("entry.1086690423",x.sh);
  q.set("entry.213940732",x.sm);
  q.set("entry.1429136936",x.endIso||x.iso);
  q.set("entry.389667626",x.eh);
  q.set("entry.710216474",x.em);
- q.set("entry.1721870764","配合生產");
+ q.set("entry.1721870764",isForeignEmployee(x)?"SUPPORT PRODUCTION":"配合生產");
  q.set("entry.165856962",String(x.brk));
  return FORM_BASE+"&"+q.toString();
 }
@@ -333,7 +344,7 @@ function equivalentHours(hours,kind){
   const overtime=Math.max(0,hours-8);
   return first8*2+overtime*3;
 }
-function kindOf(v){return v.isNationalHoliday||String(v.type||"").startsWith("60")?"national":v.isWeekend||String(v.type||"").startsWith("25")?"weekend":"weekday"}
+function kindOf(v){const t=String(v.type||"");return v.isNationalHoliday||t.startsWith("60")||t.startsWith("63")?"national":v.isWeekend||t.startsWith("25")||t.startsWith("20")?"weekend":"weekday"}
 function dayKey(){return isoDate(new Date())}
 function userScopedKey(base){const emp=String(profile().emp||'').trim().toUpperCase();return base+'_'+(emp||'GUEST')}
 function opState(){try{return JSON.parse(localStorage.getItem(userScopedKey("ot45_ops"))||"{}")||{}}catch{return{}}}
@@ -371,22 +382,104 @@ const ACH=[
  {id:"allround",icon:"🌟",name:"全能申報者",rarity:"legendary",desc:"已解鎖至少 15 個成就",ok:(r,s,u)=>u.size>=15}
 ];
 let modalQueue=[];
-function showNextModal(){if(!$('achievementModal').classList.contains('hidden')||!modalQueue.length)return;const a=modalQueue.shift();$('modalIcon').textContent=a.icon;$('modalName').textContent=a.name;$('modalRarity').textContent=`${RARITY[a.rarity]}成就`;$('modalText').textContent=`成就解鎖：${a.desc}`;$('achievementModal').classList.remove('hidden')}
+function showNextModal(){if(!$('achievementModal').classList.contains('hidden')||!modalQueue.length)return;const a=modalQueue.shift(),foreign=isForeignEmployee(),en=ACH_EN[a.id]||[a.name,a.desc];$('modalIcon').textContent=a.icon;$('modalName').textContent=foreign?en[0]:a.name;$('modalRarity').textContent=foreign?`${RARITY_EN[a.rarity]} achievement`:`${RARITY[a.rarity]}成就`;$('modalText').textContent=foreign?`Achievement unlocked: ${en[1]}`:`成就解鎖：${a.desc}`;$('modalClose').textContent=foreign?'Close':'關閉';$('achievementModal').classList.remove('hidden')}
 $('modalClose').onclick=()=>{$('achievementModal').classList.add('hidden');showNextModal()};
 function pendingAchievements(){try{return JSON.parse(localStorage.getItem(userScopedKey('ot46_pending_achievements'))||'[]')}catch{return[]}}
 function savePendingAchievements(v){localStorage.setItem(userScopedKey('ot46_pending_achievements'),JSON.stringify(v))}
 function checkAchievements(){const r=records(),s=opState(),u=unlockedSet(),pending=pendingAchievements();let changed=true;while(changed){changed=false;for(const a of ACH){if(!u.has(a.id)&&a.ok(r,s,u)){u.add(a.id);if(!pending.includes(a.id))pending.push(a.id);changed=true}}}saveUnlocked(u);savePendingAchievements(pending);renderAchievements()}
 function showDeferredAchievements(){const pending=pendingAchievements();if(!pending.length)return;modalQueue=pending.map(id=>ACH.find(a=>a.id===id)).filter(Boolean);savePendingAchievements([]);showNextModal()}
-function renderAchievements(){const r=records(),u=unlockedSet();$('statTotal').textContent=r.length;$('statHoliday').textContent=r.filter(v=>kindOf(v)!=="weekday").length;$('statUnlocked').textContent=`${u.size}/${ACH.length}`;$('achievementProgress').style.width=`${Math.round(u.size/ACH.length*100)}%`;$('achievementGrid').innerHTML=ACH.map(a=>{const ok=u.has(a.id);return `<div class="achievement ${ok?'unlocked':''} ${a.secret?'secret':''}"><div class="icon">${ok||!a.secret?a.icon:'❓'}</div><div class="name">${ok||!a.secret?a.name:'隱藏成就'}</div><div class="rarity">${ok?RARITY[a.rarity]:'???'}</div><div class="desc">${ok||!a.secret?a.desc:'尚未發現解鎖條件'}</div><div class="status">${ok?'✅ 已解鎖':'🔒 尚未解鎖'}</div></div>`}).join('')}
+const ACH_EN={first:['First Launch','Complete your first overtime declaration'],three:['Getting Started','Complete 3 overtime declarations'],five:['Five Strong','Complete 5 overtime declarations'],ten:['Ten Reached','Complete 10 overtime declarations'],twentyfive:['25 Milestone','Complete 25 overtime declarations'],fifty:['Overtime Veteran','Complete 50 overtime declarations'],hundred:['Century Mark','Complete 100 overtime declarations'],weekend:['Rest-day Warrior','Submit overtime on a rest day'],red:['Holiday Duty','Submit overtime on a national holiday'],bothholiday:['Holiday All-Rounder','Submit overtime on both a rest day and a national holiday'],months:['Across Months','Use the tool in at least 3 different months'],halfyear:['Six-Month Companion','Have overtime records in at least 6 different months'],longday:['A Long Day','Reach 8 actual overtime hours in one declaration'],tenhours:['Long Night','Reach 10 actual overtime hours in one declaration'],weekday:['Weekday Warrior','Complete a weekday overtime declaration'],streak3:['Three-Day Streak','Declare overtime on 3 consecutive dates'],streak5:['Five-Day Streak','Declare overtime on 5 consecutive dates'],equiv20:['Multiplier Master','Reach 20 equivalent basic hours in one declaration'],findit:['How Did You Find This?','Open Achievements 10 times within a short period'],qa:['Quality Engineer','Use Declare, Records, Achievements and Settings on the same day'],logo:['Stop Tapping','Tap the logo 10 times in a row'],version:['There Must Be Something Here','Tap the version number 7 times in a row'],again:['One More Look','Return to Records several times in one day'],tester:['You Must Be Testing','Unlock 3 different hidden operation achievements in one day'],allround:['All-Round Declarer','Unlock at least 15 achievements']};const RARITY_EN={common:'Common',rare:'Rare',epic:'Epic',legendary:'Legendary',hidden:'Hidden'};
+function renderAchievements(){const r=records(),u=unlockedSet(),foreign=isForeignEmployee();$('statTotal').textContent=r.length;$('statHoliday').textContent=r.filter(v=>kindOf(v)!=="weekday").length;$('statUnlocked').textContent=`${u.size}/${ACH.length}`;$('achievementProgress').style.width=`${Math.round(u.size/ACH.length*100)}%`;$('achievementGrid').innerHTML=ACH.map(a=>{const ok=u.has(a.id),en=ACH_EN[a.id]||[a.name,a.desc],name=foreign?en[0]:a.name,desc=foreign?en[1]:a.desc,hiddenName=foreign?'Hidden achievement':'隱藏成就',hiddenDesc=foreign?'Unlock condition not discovered yet':'尚未發現解鎖條件',status=foreign?(ok?'✅ Unlocked':'🔒 Locked'):(ok?'✅ 已解鎖':'🔒 尚未解鎖'),rarity=foreign?RARITY_EN[a.rarity]:RARITY[a.rarity];return `<div class="achievement ${ok?'unlocked':''} ${a.secret?'secret':''}"><div class="icon">${ok||!a.secret?a.icon:'❓'}</div><div class="name">${ok||!a.secret?name:hiddenName}</div><div class="rarity">${ok?rarity:'???'}</div><div class="desc">${ok||!a.secret?desc:hiddenDesc}</div><div class="status">${status}</div></div>`}).join('')}
 function periodRange(now=dateFromIso(todayIso())){const end=new Date(now.getFullYear(),now.getMonth(),25);let target=end;if(now.getDate()>25)target=new Date(now.getFullYear(),now.getMonth()+1,25);return{start:new Date(target.getFullYear(),target.getMonth()-1,26),end:target}}
 function shortDate(d){return `${d.getMonth()+1}/${d.getDate()}`}
-function renderStats(){const {start,end}=periodRange(),a=isoDate(start),b=isoDate(end),items=records().filter(v=>v.date>=a&&v.date<=b).map(v=>{const hours=parseHours(v);return{...v,hours,eq:equivalentHours(hours,kindOf(v))}});const total=items.reduce((s,v)=>s+v.hours,0),eq=items.reduce((s,v)=>s+v.eq,0);$('statsPeriod').textContent=`${shortDate(start)} ～ ${shortDate(end)}`;$('statHours').textContent=`${total.toFixed(1)}h`;$('statEquivalent').textContent=`${eq.toFixed(2)}h`;$('statDays').textContent=items.length;$('weekdayHours').textContent=`${items.filter(v=>kindOf(v)==='weekday').reduce((s,v)=>s+v.hours,0).toFixed(1)} 小時`;$('weekendHours').textContent=`${items.filter(v=>kindOf(v)==='weekend').reduce((s,v)=>s+v.hours,0).toFixed(1)} 小時`;$('nationalHours').textContent=`${items.filter(v=>kindOf(v)==='national').reduce((s,v)=>s+v.hours,0).toFixed(1)} 小時`;const max=Math.max(1,...items.map(v=>v.hours));$('hoursChart').innerHTML=items.length?items.map(v=>`<div class="barWrap" title="${v.date}：${v.hours.toFixed(1)}h / 等值 ${v.eq.toFixed(2)}h"><div class="bar ${kindOf(v)==='weekend'?'weekendBar':kindOf(v)==='national'?'nationalBar':''}" style="height:${Math.max(3,v.hours/max*120)}px"></div><div class="barLabel">${Number(v.date.slice(8))}</div></div>`).join(''):'<div class="note" style="align-self:center;width:100%;text-align:center">目前區間沒有申報紀錄</div>';renderRecords(items)}
-function renderRecords(items){$('recordList').innerHTML=items.length?[...items].reverse().map(v=>`<div class="recordItem"><div class="recordTop"><span>${v.date}</span><span>${v.hours.toFixed(1)}h → ${v.eq.toFixed(2)}h</span></div><div class="note">${v.type.split(' Foreign')[0]}｜${v.time}｜休息 ${v.breakHours}h</div></div>`).join(''):'尚無申報紀錄'}
+function renderStats(){const {start,end}=periodRange(),a=isoDate(start),b=isoDate(end),foreign=isForeignEmployee(),items=records().filter(v=>v.date>=a&&v.date<=b).map(v=>{const hours=parseHours(v);return{...v,hours,eq:equivalentHours(hours,kindOf(v))}});const total=items.reduce((sum,v)=>sum+v.hours,0),eq=items.reduce((sum,v)=>sum+v.eq,0);$('statsPeriod').textContent=`${shortDate(start)} ～ ${shortDate(end)}`;$('statHours').textContent=`${total.toFixed(1)}h`;$('statEquivalent').textContent=foreign?'--':`${eq.toFixed(2)}h`;$('statDays').textContent=items.length;const unit=foreign?' h':' 小時';$('weekdayHours').textContent=`${items.filter(v=>kindOf(v)==='weekday').reduce((sum,v)=>sum+v.hours,0).toFixed(1)}${unit}`;$('weekendHours').textContent=`${items.filter(v=>kindOf(v)==='weekend').reduce((sum,v)=>sum+v.hours,0).toFixed(1)}${unit}`;$('nationalHours').textContent=`${items.filter(v=>kindOf(v)==='national').reduce((sum,v)=>sum+v.hours,0).toFixed(1)}${unit}`;const max=Math.max(1,...items.map(v=>v.hours));$('hoursChart').innerHTML=items.length?items.map(v=>`<div class="barWrap" title="${v.date}: ${v.hours.toFixed(1)}h${foreign?'':' / equivalent '+v.eq.toFixed(2)+'h'}"><div class="bar ${kindOf(v)==='weekend'?'weekendBar':kindOf(v)==='national'?'nationalBar':''}" style="height:${Math.max(3,v.hours/max*120)}px"></div><div class="barLabel">${Number(v.date.slice(8))}</div></div>`).join(''):`<div class="note" style="align-self:center;width:100%;text-align:center">${foreign?'No overtime records in this period':'目前區間沒有申報紀錄'}</div>`;renderRecords(items)}
+function renderRecords(items){const foreign=isForeignEmployee();$('recordList').innerHTML=items.length?[...items].reverse().map(v=>`<div class="recordItem"><div class="recordTop"><span>${v.date}</span><span>${v.hours.toFixed(1)}h${foreign?'':' → '+v.eq.toFixed(2)+'h'}</span></div><div class="note">${v.type.split(' Foreign')[0]}｜${v.time}｜${foreign?'Break':'休息'} ${v.breakHours}h</div></div>`).join(''):(foreign?'No overtime records':'尚無申報紀錄')}
 function renderAdmin(){const p=profile();if(p.role!=="admin")return;const u=cachedUsers(),r=records(),e=errorLogs(),un=unlockedSet();
  const di=dayInfo(todayIso()),src=$('adminHolidaySource'),today=$('adminHolidayToday');
  if(src)src.textContent=di.holidaySource||'-';
  if(today)today.textContent=di.isNationalHoliday?(di.holidayName||'國定假日'):(di.isWeekend?'週末':'平日');$('adminUsers').textContent=u.length;$('adminRecords').textContent=r.length;$('adminErrors').textContent=e.length;$('adminAchCount').textContent=ACH.length;$('adminUnlockedCount').textContent=un.size;$('adminUserList').innerHTML=u.length?u.map(v=>`<div class="logItem"><b>${v.emp}</b>｜${v.name}<div class="tiny">最近登入：${v.lastLogin||'-'}</div></div>`).join(''):'目前沒有使用者';$('adminRecordList').innerHTML=r.length?[...r].reverse().slice(0,30).map(v=>`<div class="logItem"><b>${v.date}</b>｜${String(v.type).split(' Foreign')[0]}<div class="tiny">${v.time}｜休息 ${v.breakHours}h</div></div>`).join(''):'目前沒有申報紀錄';$('adminErrorList').innerHTML=e.length?[...e].reverse().slice(0,30).map(v=>`<div class="logItem"><span class="logCode">${v.code}</span>｜${v.module}<div>${v.message}</div><div class="tiny">${v.time}｜${JSON.stringify(v.detail||{})}</div></div>`).join(''):'✅ 目前沒有錯誤紀錄'}
-function render(){const p=profile(),has=!!p.emp&&!!p.name;document.body.classList.toggle('isAdmin',p.role==='admin');$('setup').classList.toggle('hidden',has);$('app').classList.toggle('hidden',!has);if(!has)return;const x=vals(),h=hoursFromVals(x),eq=equivalentHours(h,x.isNationalHoliday?'national':x.isWeekend?'weekend':'weekday');$('vName').textContent=x.name;$('vEmp').textContent=x.emp;$('vDepartment').textContent=x.department||'-';$('vShiftSchedule').textContent=`${x.shift==='NIGHT'?'夜班':'日班'} / ${x.scheduleType==='REGULAR'?'常日/夜':x.scheduleType}`;$('vDate').textContent=x.startIso||x.iso;$('vTime').textContent=String(x.sh).padStart(2,'0')+':'+String(x.sm).padStart(2,'0')+'–'+String(x.eh).padStart(2,'0')+':'+String(x.em).padStart(2,'0');$('vType').textContent=x.type.split(' Foreign')[0];$('vBreak').textContent=`${x.brk} 小時`;$('currentHours').textContent=`${h.toFixed(1)}h`;$('currentEquiv').textContent=`等值基本時數 ${eq.toFixed(2)}h`;const b=$('dayBadge');if(['42A','42B','42C'].includes(x.scheduleType)){b.textContent=`🔄 ${x.scheduleType}｜${x.isWorkDay?'工作日':'休息日'}｜${x.overtimeCode}`;b.className='dayBadge '+(x.isWorkDay?'weekday':'weekend');}else if(x.isNationalHoliday){b.textContent=`🎉 ${x.holidayName}｜60 國定假日加班`;b.className='dayBadge holiday';}else if(x.isWeekend){b.textContent='🗓️ 週末｜25 休息日加班';b.className='dayBadge weekend';}else{b.textContent='💼 平日｜10 平日加班';b.className='dayBadge weekday';}renderStats();renderAchievements();renderAdmin();if(p.role!=='admin')refreshAdminEligibility()}
+function applySetupLanguage(foreign){const setup=$('setup');if(!setup)return;const title=setup.querySelector('.sectionTitle'),note=setup.querySelector('.note'),labels=setup.querySelectorAll('.field label'),shiftSel=$('shift'),scheduleSel=$('scheduleType');if(foreign){if(title)title.textContent='Login';if(note)note.textContent='Enter employee ID and name.';const texts=['Employee ID','Name','Department (registration)','Shift (registration)','Schedule (registration)'];labels.forEach((el,i)=>{if(texts[i])el.textContent=texts[i]});if(shiftSel){const o=[...shiftSel.options];if(o[0])o[0].textContent='Day shift';if(o[1])o[1].textContent='Night shift';}if(scheduleSel){const o=[...scheduleSel.options];if(o[0])o[0].textContent='Regular day/night';if(o[1])o[1].textContent='42A';if(o[2])o[2].textContent='42B';if(o[3])o[3].textContent='42C';}$('localLogin').textContent='Login';$('localRegister').textContent='Register new user';}else{if(title)title.textContent='登入';if(note)note.textContent='請輸入工號與中文姓名。';const texts=['工號','姓名','部門（註冊時使用）','班別（註冊時使用）','班型（註冊時使用）'];labels.forEach((el,i)=>{if(texts[i])el.textContent=texts[i]});if(shiftSel){const o=[...shiftSel.options];if(o[0])o[0].textContent='日班';if(o[1])o[1].textContent='夜班';}if(scheduleSel){const o=[...scheduleSel.options];if(o[0])o[0].textContent='常日/夜';if(o[1])o[1].textContent='42A';if(o[2])o[2].textContent='42B';if(o[3])o[3].textContent='42C';}$('localLogin').textContent='登入';$('localRegister').textContent='新使用者註冊';}}
+function applyForeignLanguage(p){
+ const foreign=isForeignEmployee(p);
+ document.documentElement.lang=foreign?'en':'zh-Hant';
+ applySetupLanguage(foreign);
+
+ const hn=$('holidayNotice');
+ if(hn){
+   const hb=hn.querySelector('b'),hs=hn.querySelector('.small');
+   if(foreign){
+     if(hb)hb.textContent='National holiday overtime notice';
+     if(hs)hs.textContent='Regular schedules can automatically identify national holidays. The current 42A / 42B / 42C rotation does not automatically identify national holidays. If a 42 rotation falls on a national holiday, please verify the declaration and manually change it to the correct national-holiday overtime item before submitting.';
+   }else{
+     if(hb)hb.textContent='國定假日申報注意事項';
+     if(hs)hs.textContent='一般班別可自動判斷國定假日；目前版本的 42A／42B／42C 輪班尚無法自動判斷國定假日。若 42 輪班遇到國定假日，請在送出前自行確認並手動修改為正確的國定假日加班項目。';
+   }
+ }
+ const fn=$('foreignNotice');if(fn)fn.classList.add('hidden');
+
+ const valueLabels=foreign
+   ? {vName:'Name',vEmp:'Employee ID',vDepartment:'Department',vShiftSchedule:'Shift / Schedule',vDate:'Date',vTime:'Time',vType:'Overtime type',vBreak:'Break'}
+   : {vName:'姓名',vEmp:'工號',vDepartment:'部門',vShiftSchedule:'班別 / 班型',vDate:'日期',vTime:'時間',vType:'加班類型',vBreak:'休息'};
+ Object.entries(valueLabels).forEach(([id,t])=>{const el=$(id);if(el&&el.previousElementSibling)el.previousElementSibling.textContent=t;});
+
+ const nav=document.querySelectorAll('.nav button');
+ const navText=foreign?['Declare','Records','Achievements','Settings','Admin']:['申報','紀錄','成就','設定','管理'];
+ navText.forEach((t,i)=>{if(nav[i])nav[i].textContent=t});
+ $('simulate').textContent=foreign?'Open overtime form':'前往加班申報';
+ $('logout').textContent=foreign?'Logout':'登出';
+
+ const recordTitles=document.querySelectorAll('#tab-records .sectionTitle');
+ if(recordTitles[0])recordTitles[0].textContent=foreign?'📊 Overtime statistics':'📊 加班統計';
+ if(recordTitles[1])recordTitles[1].textContent=foreign?'🧾 Overtime records':'🧾 加班紀錄';
+ const statLabels=document.querySelectorAll('#tab-records .stat span');
+ const statText=foreign?['Actual overtime','Equivalent hours','Overtime days']:['實際加班','等值基本時數','加班天數'];
+ statText.forEach((t,i)=>{if(statLabels[i])statLabels[i].textContent=t});
+ const rows=document.querySelectorAll('#tab-records .row .label');
+ const rowText=foreign?['Weekday overtime','Rest-day overtime','National-holiday overtime']:['平日加班','休息日加班','國定假日加班'];
+ rowText.forEach((t,i)=>{if(rows[i])rows[i].textContent=t});
+
+ const ach=document.querySelector('#tab-achievements .sectionTitle');if(ach)ach.textContent=foreign?'🏆 Achievements':'🏆 成就';
+ const achStats=document.querySelectorAll('#tab-achievements .stat span');
+ const achStatText=foreign?['Declarations','Holiday shifts','Unlocked']:['申報次數','假日出勤','已解鎖'];
+ achStatText.forEach((t,i)=>{if(achStats[i])achStats[i].textContent=t});
+
+ const settings=document.querySelector('#tab-settings .sectionTitle');if(settings)settings.textContent=foreign?'⚙️ Settings':'⚙️ 設定';
+ $('runDiagnostics').textContent=foreign?'Run automatic system diagnostics':'一鍵自動系統診斷';
+ const diagCard=$('runDiagnostics')&&$('runDiagnostics').closest('.card');
+ if(diagCard){
+   const t=diagCard.querySelector('.sectionTitle'),n=diagCard.querySelector('.note');
+   if(t)t.textContent=foreign?'🩺 System diagnostics':'🩺 系統診斷';
+   if(n)n.textContent=foreign
+      ?'One-click check of Frontend, Backend, Google Sheet, index, holidays, 42 schedule, night shift and foreign-employee rules. Tests do not write overtime records.'
+      :'一鍵檢查 Frontend、Backend、Google Sheet、索引、國定假日、42 輪班、夜班與外籍員工規則。診斷不會寫入加班紀錄。';
+   if(foreign&&$('diagnosticState').textContent==='尚未執行')$('diagnosticState').textContent='Not run yet';
+   if(!foreign&&$('diagnosticState').textContent==='Not run yet')$('diagnosticState').textContent='尚未執行';
+ }
+
+ const ver=document.querySelector('#releaseNotesCard .sectionTitle');if(ver)ver.textContent=foreign?'📝 v5.0 release notes':'📝 v5.0 更新內容';
+ const rn=$('releaseNotesCard');
+ if(rn){
+   const items=rn.querySelectorAll('.versionItem');
+   const en=[
+    ['v5.0 production','Foreign employees: codes 20/63 + SUPPORT PRODUCTION; data consistency and indexing; registration locking; frontend/backend rule-version synchronization; one-click system diagnostics.'],
+    ['Night-shift attribution fix','For night shifts declared from 00:00–19:59, the shift-start date is the previous day at 20:00 and is used to determine work day / rest day / national holiday. Weekday night overtime is still entered on the clock-out date from 05:00–08:00. Day-shift logic is unchanged.'],
+    ['42 schedule support','Added 42A / 42B / 42C schedules with automatic work-day and rest-day determination using the 4-on / 2-off cycle.'],
+    ['Night-shift declaration support','Added night-shift rules for weekday overtime 05:00–08:00 and rest-day overtime 20:00–08:00 the next day.'],
+    ['Department / shift settings','Added department, day/night shift and schedule profile data. After login, the matching declaration rules are applied automatically.']
+   ];
+   const zh=[
+    ['v5.0 正式版','外籍員工 20/63 + SUPPORT PRODUCTION、資料一致性與索引、註冊鎖定、前後端規則版本同步、管理員專用一鍵系統診斷。'],
+    ['夜班早班下班日期歸屬修正','夜班於 00:00–19:59 申報時，以前一天 20:00 的班次起始日判斷平日／休息日／國定假日；平日夜班的實際加班日期仍填入下班當日 05:00–08:00。日班邏輯不變。'],
+    ['42 輪班支援','新增 42A／42B／42C 班型，依 4 上 2 休循環自動判斷工作日與休息日。'],
+    ['夜班申報支援','新增夜班申報規則，支援平日 05:00–08:00 與休息日 20:00–隔日 08:00 的申報時段。'],
+    ['部門／班別設定','新增部門、日夜班與班型資料，登入後可依後台設定自動套用對應申報內容。']
+   ];
+   const src=foreign?en:zh;
+   items.forEach((it,i)=>{if(!src[i])return;const b=it.querySelector('.versionHead b'),n=it.querySelector('.note');if(b)b.textContent=src[i][0];if(n)n.textContent=src[i][1];});
+ }
+}
+function render(){const p=profile(),has=!!p.emp&&!!p.name;document.body.classList.toggle('isAdmin',p.role==='admin');$('setup').classList.toggle('hidden',has);$('app').classList.toggle('hidden',!has);if(!has)return;applyForeignLanguage(p);const foreign=isForeignEmployee(p),x=vals(),displayCode=x.formOvertimeCode||x.overtimeCode,h=hoursFromVals(x),eq=equivalentHours(h,x.isNationalHoliday?'national':x.isWeekend?'weekend':'weekday');$('vName').textContent=x.name;$('vEmp').textContent=x.emp;$('vDepartment').textContent=x.department||'-';$('vShiftSchedule').textContent=foreign?`${x.shift==='NIGHT'?'Night':'Day'} / ${x.scheduleType==='REGULAR'?'Regular':x.scheduleType}`:`${x.shift==='NIGHT'?'夜班':'日班'} / ${x.scheduleType==='REGULAR'?'常日/夜':x.scheduleType}`;$('vDate').textContent=x.startIso||x.iso;$('vTime').textContent=String(x.sh).padStart(2,'0')+':'+String(x.sm).padStart(2,'0')+'–'+String(x.eh).padStart(2,'0')+':'+String(x.em).padStart(2,'0');$('vType').textContent=foreign?(displayCode===20?'20 Rest-day overtime':displayCode===63?'63 National-holiday overtime':'10 Weekday overtime'):x.type.split(' Foreign')[0];$('vBreak').textContent=foreign?`${x.brk} h`:`${x.brk} 小時`;$('currentHours').textContent=`${h.toFixed(1)}h`;$('currentEquiv').textContent=foreign?'Actual overtime hours only':`等值基本時數 ${eq.toFixed(2)}h`;$('currentCalcLabel').textContent=foreign?'Current overtime':'本次換算';$('foreignNotice').classList.add('hidden');$('statEquivalentBox').classList.toggle('hidden',foreign);$('statsRuleNote').textContent=foreign?'Statistics period: previous month 26th to current month 25th. Foreign employee mode shows actual overtime hours only.':'統計區間：前一個月 26 日～當月 25 日。等值基本時數依你的規則換算：平日 1.5 倍；週末／國定假日前 8 小時 2 倍，超過 8 小時部分 3 倍。';const b=$('dayBadge');if(['42A','42B','42C'].includes(x.scheduleType)){b.textContent=foreign?`🔄 ${x.scheduleType}｜${x.isWorkDay?'Work day':'Rest day'}｜${displayCode}`:`🔄 ${x.scheduleType}｜${x.isWorkDay?'工作日':'休息日'}｜${displayCode}`;b.className='dayBadge '+(x.isWorkDay?'weekday':'weekend');}else if(x.isNationalHoliday){b.textContent=foreign?`🎉 ${x.holidayName||'National holiday'}｜${displayCode} National-holiday overtime`:`🎉 ${x.holidayName}｜${displayCode} 國定假日加班`;b.className='dayBadge holiday';}else if(x.isWeekend){b.textContent=foreign?`🗓️ Rest day｜${displayCode} Rest-day overtime`:`🗓️ 週末｜${displayCode} 休息日加班`;b.className='dayBadge weekend';}else{b.textContent=foreign?'💼 Weekday｜10 Weekday overtime':'💼 平日｜10 平日加班';b.className='dayBadge weekday';}renderStats();renderAchievements();renderAdmin();if(p.role!=='admin')refreshAdminEligibility()}
+$('emp').addEventListener('input',()=>applySetupLanguage($('emp').value.trim().toUpperCase().endsWith('F')));
 $('localLogin').onclick=async()=>{
  const emp=$('emp').value.trim().toUpperCase(),second=$('name').value.trim();
  if(!emp||!second){$('loginState').textContent='❌ 請輸入工號與姓名';return}
@@ -454,7 +547,7 @@ $('simulate').onclick=()=>{
   const fresh=vals(),p=profile(),formUrl=buildGoogleFormUrl(fresh);
   markOp('declare');checkAchievements();
   // best-effort 紀錄；不 await。重複只在後端略過，不回前端彈窗。
-  try{fetch(BACKEND_API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({action:'declare',employeeId:p.emp,name:p.name,date:fresh.iso,time:`${fresh.sh}:${fresh.sm}-${fresh.eh}:${fresh.em}`,startDate:fresh.startIso,endDate:fresh.endIso,breakHours:fresh.brk,type:fresh.type,holidayName:fresh.holidayName||''}),keepalive:true,cache:'no-store'}).catch(()=>{});}catch{}
+  try{fetch(BACKEND_API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({action:'declare',employeeId:p.emp,name:p.name,date:fresh.iso,time:`${fresh.sh}:${fresh.sm}-${fresh.eh}:${fresh.em}`,startDate:fresh.startIso,endDate:fresh.endIso,breakHours:fresh.brk,type:fresh.type,holidayName:fresh.holidayName||'',reason:isForeignEmployee(p)?'SUPPORT PRODUCTION':'配合生產'}),keepalive:true,cache:'no-store'}).catch(()=>{});}catch{}
   // 關鍵路徑：立即開 Forms，不等待後端查重、統計、成就。
   location.href=formUrl;
   setTimeout(()=>{btn.disabled=false},1200);
@@ -495,10 +588,11 @@ $('adminLogoutBtn').onclick=async()=>{
 
 
 $('appLogo').onclick=()=>tapCounter('logoTaps',10,15000);$('versionTap').onclick=()=>tapCounter('versionTaps',7,15000);
-async function runBackendDiagnostics(){const u=new URL(BACKEND_API);u.searchParams.set('action','diagnostics');return await getJson(u.toString(),{cache:'no-store'});}
-async function exportBackendDiagnosticLog(){const u=new URL(BACKEND_API);u.searchParams.set('action','exportDiagnosticLog');const r=await getJson(u.toString(),{cache:'no-store'});if(!r||!r.ok)throw new Error((r&&r.error)||'LOG_EXPORT_FAILED');const blob=new Blob([r.content||'[]'],{type:r.mimeType||'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=r.fileName||'overtime-diagnostic-log.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);return r;}
+async function runBackendDiagnostics(){const r=await adminPost('diagnostics',{sessionToken:adminToken()});if(!r||!r.ok)throw new Error((r&&r.error)||'DIAGNOSTICS_FAILED');return r;}
+async function exportBackendDiagnosticLog(){const r=await adminPost('exportDiagnosticLog',{sessionToken:adminToken()});if(!r||!r.ok)throw new Error((r&&r.error)||'LOG_EXPORT_FAILED');const blob=new Blob([r.content||'[]'],{type:r.mimeType||'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=r.fileName||'overtime-v5-diagnostic-log.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);return r;}
+$('runDiagnostics').onclick=async()=>{const btn=$('runDiagnostics'),state=$('diagnosticState'),list=$('diagnosticList');btn.disabled=true;state.textContent='⏳ 診斷中…';list.innerHTML='';try{const frontChecks=[{name:'Frontend version',ok:true,detail:'v5.0'},{name:'Backend endpoint',ok:!!BACKEND_API,detail:BACKEND_API},{name:'Backend compatibility',ok:backendCompatibility.ok,detail:backendCompatibility.message},{name:'Night cutoff',ok:(nightShiftAttributionIso({shift:'NIGHT'},new Date(2026,8,12,19,59))==='2026-09-11'&&nightShiftAttributionIso({shift:'NIGHT'},new Date(2026,8,12,20,0))==='2026-09-12'),detail:'19:59 rollback / 20:00 current'}];const r=await runBackendDiagnostics();const all=frontChecks.concat((r&&r.checks)||[]);const ok=all.every(x=>x.ok);state.textContent=(ok?'✅ PASS ':'❌ FAIL ')+all.filter(x=>x.ok).length+'/'+all.length;list.innerHTML=all.map(x=>`<div class="logItem"><b>${x.ok?'✅':'❌'} ${x.name}</b><div class="tiny">${String(x.detail||'')}</div></div>`).join('');}catch(e){state.textContent='❌ 診斷失敗：'+String(e&&e.message||e);logError('DIAG-001','diagnostics',String(e&&e.message||e));}finally{btn.disabled=false}};
 window.otDiagnostics={run:runBackendDiagnostics,exportLog:exportBackendDiagnosticLog,localLogs:errorLogs};
-(async()=>{await loadSystemConfig();await restoreAdminSession();render();if(!$('app').classList.contains('hidden'))switchTab(profile().role==='admin'?'admin':'declare');const p=profile();if(p.emp&&p.name){syncRecordsFromBackend(p.emp,p.name).then(()=>{checkAchievements();setTimeout(showDeferredAchievements,300)}).catch(()=>{checkAchievements();setTimeout(showDeferredAchievements,300)});}else setTimeout(showDeferredAchievements,500)})();
+(async()=>{await loadSystemConfig();await restoreAdminSession();render();if(!$('app').classList.contains('hidden'))switchTab(profile().role==='admin'?'admin':'declare');const p=profile();if(p.emp&&p.name){Promise.allSettled([syncRecordsFromBackend(p.emp,p.name),syncBackendDay()]).then(()=>{render();checkAchievements();setTimeout(showDeferredAchievements,300)});}else setTimeout(showDeferredAchievements,500)})();
 })();
 </script>
 </body></html>
