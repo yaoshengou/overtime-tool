@@ -262,7 +262,7 @@ function errorLogs(){try{return JSON.parse(localStorage.getItem("ot45_error_logs
 function logError(code,module,message,detail={}){const a=errorLogs();const traceId=`OT-WEB-${Date.now()}-${Math.random().toString(36).slice(2,8).toUpperCase()}`;a.push({time:new Date().toISOString(),traceId,code,module,message,detail,version:"4.8",emp:profile().emp||"",stack:(new Error()).stack||""});localStorage.setItem("ot45_error_logs",JSON.stringify(a.slice(-200)));renderAdmin()}
 function todayIso(){return isoDate(new Date())}
 function dateFromIso(s){const [y,m,d]=s.split("-").map(Number);return new Date(y,m-1,d)}
-function nightShiftAttributionIso(p=profile(),now=new Date()){const today=isoDate(now);return p.shift==='NIGHT'&&now.getHours()<12?addDaysIso(today,-1):today}
+function nightShiftAttributionIso(p=profile(),now=new Date()){const today=isoDate(now);return p.shift==='NIGHT'&&now.getHours()<20?addDaysIso(today,-1):today}
 function dayInfo(iso=nightShiftAttributionIso()){if(backendDay&&backendDay.iso===iso)return {...backendDay,backendVerified:backendDay.backendVerified===true};const cached=readHolidayCache(iso);return cached?{...cached,backendVerified:false,holidaySource:'LOCAL_CACHE'}:builtInDay(iso)}
 function addDaysIso(iso,days){const d=dateFromIso(iso);d.setDate(d.getDate()+days);return isoDate(d)}
 function daysBetweenIso(a,b){const A=Date.UTC(...a.split('-').map((v,i)=>i===1?Number(v)-1:Number(v))),B=Date.UTC(...b.split('-').map((v,i)=>i===1?Number(v)-1:Number(v)));return Math.round((B-A)/86400000)}
@@ -301,7 +301,7 @@ function vals(now=new Date()){
  // 只有夜班早上下班後申報才回推前一天判定班別。
  // 平日夜班實際加班發生在下班當日 05:00–08:00，因此 Forms 日期使用今天；
  // 休息日／國定假日夜班則維持前一日 20:00 → 今日 08:00。
- if(p.shift==='NIGHT'&&now.getHours()<12&&x.isWorkDay){x.startIso=today;x.endIso=today;}
+ if(p.shift==='NIGHT'&&now.getHours()<20&&x.isWorkDay){x.startIso=today;x.endIso=today;}
  return x;
 }
 
