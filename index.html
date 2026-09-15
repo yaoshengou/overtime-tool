@@ -20,7 +20,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC",sans
  <div class="note" style="margin:6px 0 14px">請輸入工號與中文姓名。</div>
  <div class="field"><label>工號</label><input id="emp" autocomplete="username" placeholder="請輸入工號"></div>
  <div class="field"><label>姓名</label><input id="name" type="text" autocomplete="name" placeholder="請輸入中文姓名"></div>
- <div class="field"><label>部門（註冊時使用）</label><select id="department"><option value="MA1100&1P00">MA1100&1P00</option></select></div>
+ <div class="field"><label>部門（註冊時使用）</label><select id="department"><option value="MA1100&1P00">MA1100&1P00</option><option value="MA1300_OFFICE">MA1300_OFFICE</option><option value="MA1310_SMT">MA1310_SMT</option><option value="MA1310_DIP">MA1310_DIP</option><option value="MA1320_SMT">MA1320_SMT</option><option value="MA1320_DIP">MA1320_DIP</option><option value="MA1330_SMT_D">MA1330_SMT_D</option><option value="MA1330_SMT_N">MA1330_SMT_N</option><option value="MA1330_DIP_D">MA1330_DIP_D</option><option value="MA1330_DIP_N">MA1330_DIP_N</option><option value="MA1350_MPA">MA1350_MPA</option><option value="MA5300_OFFICE">MA5300_OFFICE</option><option value="MA5310_SMT">MA5310_SMT</option><option value="MA5310_DIP">MA5310_DIP</option><option value="MA5320_SMT">MA5320_SMT</option><option value="MA5320_DIP">MA5320_DIP</option><option value="MA5330_SMT_D">MA5330_SMT_D</option><option value="MA5330_SMT_N">MA5330_SMT_N</option><option value="MA5330_DIP_D">MA5330_DIP_D</option><option value="MA5330_DIP_N">MA5330_DIP_N</option><option value="MA5350_MPA">MA5350_MPA</option></select></div>
  <div class="field"><label>班別（註冊時使用）</label><select id="shift"><option value="DAY">日班</option><option value="NIGHT">夜班</option></select></div>
  <div class="field"><label>班型（註冊時使用）</label><select id="scheduleType"><option value="REGULAR">常日/夜</option><option value="42A">42A</option><option value="42B">42B</option><option value="42C">42C</option></select></div>
  <button class="primary" id="localLogin">登入</button>
@@ -39,10 +39,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC",sans
    <div class="row"><span class="label">姓名</span><span class="value" id="vName"></span></div>
    <div class="row"><span class="label">工號</span><span class="value" id="vEmp"></span></div>
    <div class="row"><span class="label">部門</span><span class="value" id="vDepartment"></span></div>
+   <div class="row"><span class="label">表單路由</span><span class="value" id="vFormRoute"></span></div>
    <div class="row"><span class="label">班別 / 班型</span><span class="value" id="vShiftSchedule"></span></div>
    <div class="row"><span class="label">日期</span><span class="value" id="vDate"></span></div>
    <div class="row"><span class="label">時間</span><span class="value" id="vTime"></span></div>
    <div class="row"><span class="label">加班類型</span><span class="value" id="vType"></span></div>
+   <div class="row"><span class="label">加班理由</span><span class="value" id="vReason"></span></div>
    <div class="row"><span class="label">休息</span><span class="value" id="vBreak"></span></div>
    <div class="equivBox"><div class="note" id="currentCalcLabel">本次換算</div><b id="currentHours">0h</b><div class="note" id="currentEquiv">等值基本時數 0h</div></div>
    <div id="holidayNotice" class="nationalNotice">
@@ -126,6 +128,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC",sans
 </div>
 
 <div id="achievementModal" class="modalBack hidden"><div class="modal"><div class="modalIcon" id="modalIcon">🏆</div><div class="modalTitle" id="modalName"></div><div class="modalRarity" id="modalRarity"></div><div class="modalText" id="modalText"></div><button class="primary" id="modalClose">收下成就</button></div></div>
+<div id="submitConfirmModal" class="modalBack hidden"><div class="modal" style="text-align:left"><div class="modalIcon" style="text-align:center">⚠️</div><div class="modalTitle" id="submitConfirmTitle" style="text-align:center">確認送出加班申報</div><div class="modalText" id="submitConfirmText" style="white-space:pre-line"></div><button class="primary" id="submitConfirmYes">確認送出</button><button class="secondary" id="submitConfirmNo">取消</button></div></div>
 
 <script>
 (()=>{
@@ -182,6 +185,10 @@ const $=id=>document.getElementById(id);
  async function healthBackend(){const u=new URL(BACKEND_API);u.searchParams.set('action','health');return await jsonpRequest(u.toString(),8000);}
  async function loadSystemConfig(){try{const r=await healthBackend();backendCompatibility={checked:true,ok:!!(r&&r.ok&&r.apiVersion===EXPECTED_API_VERSION&&r.ruleSetVersion===EXPECTED_RULESET),message:r&&r.ok?`Backend ${r.apiVersion} / ${r.ruleSetVersion}`:'Backend health failed'};systemConfig={nightShiftRuleMode:'ACTUAL_CROSS_DATE',ruleSetVersion:r&&r.ruleSetVersion||''};}catch(e){backendCompatibility={checked:true,ok:false,message:String(e&&e.message||e)};}}
  async function registerBackend(emp,name,department,shift,scheduleType){return await getJson(BACKEND_API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({action:'register',employeeId:emp,name,department,shift,scheduleType}),cache:'no-store'},30000);}
+ async function submitMicrosoftV50Backend(data){
+   return await getJson(BACKEND_API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({action:'submitMicrosoftV50',employeeId:data.employeeId,name:data.name,date:data.date}),cache:'no-store'},30000);
+ }
+
 
  function normalizeRemoteRecord(v){const date=String(v&&v.date||'').slice(0,10),type=String(v&&v.type||''),time=String(v&&v.time||''),dayType=String(v&&v.dayType||'');const isNationalHoliday=dayType==='national_holiday'||type.startsWith('60')||type.startsWith('63'),isWeekend=dayType==='weekend'||type.startsWith('25')||type.startsWith('20'),isHoliday=isNationalHoliday||isWeekend;return{date,type,time,breakHours:(v&&v.breakHours!==''&&v&&v.breakHours!=null)?Number(v.breakHours):(isHoliday?2:1),isNationalHoliday,isWeekend,isHoliday,holidayName:String(v&&v.holidayName||''),ts:Number(v&&v.ts)||Date.now(),recordKey:String(v&&v.recordKey||'')}}
  async function syncRecordsFromBackend(emp,name){const r=await recordsBackend(emp,name);if(!r||r.ok!==true||r.loggedIn!==true||!Array.isArray(r.records))throw new Error((r&&r.error)||'紀錄同步失敗');writeRecords(r.records.map(normalizeRemoteRecord));return r.records.length;}
@@ -297,6 +304,9 @@ function is42WorkDay(iso,scheduleType){
 }
 function isForeignEmployee(p=profile()){return String((p&&p.emp)||'').trim().toUpperCase().endsWith('F')}
 function foreignTypeFor(code){return code===25?'20休息日加班(無交通費) Work overtime on holidays (no transportation expenses)':code===60?'63國定假日加班(無交通費) Work overtime on national holidays (no transportation expenses)':'10平日加班 Work overtime on weekdays'}
+const MICROSOFT_DEPARTMENTS=new Set(["MA1300_OFFICE", "MA1310_SMT", "MA1310_DIP", "MA1320_SMT", "MA1320_DIP", "MA1330_SMT_D", "MA1330_SMT_N", "MA1330_DIP_D", "MA1330_DIP_N", "MA1350_MPA", "MA5300_OFFICE", "MA5310_SMT", "MA5310_DIP", "MA5320_SMT", "MA5320_DIP", "MA5330_SMT_D", "MA5330_SMT_N", "MA5330_DIP_D", "MA5330_DIP_N", "MA5350_MPA"]);
+function declarationFormRoute(department){const dep=String(department||'').trim();if(dep==='MA1100&1P00')return 'GOOGLE';if(MICROSOFT_DEPARTMENTS.has(dep))return 'MICROSOFT';return 'UNKNOWN';}
+function microsoftActualDates(x,p){if(p&&p.shift==='NIGHT'&&x&&x.isWorkDay)return {start:addDaysIso(x.iso,1),end:addDaysIso(x.iso,1)};return {start:(x.startIso||x.iso),end:(x.endIso||x.iso)};}
 function declarationPlan(iso,p,di){
  const is42=['42A','42B','42C'].includes(p.scheduleType);
  let workDay,code,type,isNationalHoliday=false,isWeekend=false,holidayName='';
@@ -430,14 +440,13 @@ function applyForeignLanguage(p){
  const fn=$('foreignNotice');if(fn)fn.classList.add('hidden');
 
  const valueLabels=foreign
-   ? {vName:'Name',vEmp:'Employee ID',vDepartment:'Department',vShiftSchedule:'Shift / Schedule',vDate:'Date',vTime:'Time',vType:'Overtime type',vBreak:'Break'}
-   : {vName:'姓名',vEmp:'工號',vDepartment:'部門',vShiftSchedule:'班別 / 班型',vDate:'日期',vTime:'時間',vType:'加班類型',vBreak:'休息'};
+   ? {vName:'Name',vEmp:'Employee ID',vDepartment:'Department',vFormRoute:'Form route',vShiftSchedule:'Shift / Schedule',vDate:'Date',vTime:'Time',vType:'Overtime type',vReason:'Overtime reason',vBreak:'Break'}
+   : {vName:'姓名',vEmp:'工號',vDepartment:'部門',vFormRoute:'表單路由',vShiftSchedule:'班別 / 班型',vDate:'日期',vTime:'時間',vType:'加班類型',vReason:'加班理由',vBreak:'休息'};
  Object.entries(valueLabels).forEach(([id,t])=>{const el=$(id);if(el&&el.previousElementSibling)el.previousElementSibling.textContent=t;});
 
  const nav=document.querySelectorAll('.nav button');
  const navText=foreign?['Declare','Records','Achievements','Settings','Admin']:['申報','紀錄','成就','設定','管理'];
  navText.forEach((t,i)=>{if(nav[i])nav[i].textContent=t});
- $('simulate').textContent=foreign?'Open overtime form':'前往加班申報';
  $('logout').textContent=foreign?'Logout':'登出';
 
  const recordTitles=document.querySelectorAll('#tab-records .sectionTitle');
@@ -490,7 +499,7 @@ function applyForeignLanguage(p){
    items.forEach((it,i)=>{if(!src[i])return;const b=it.querySelector('.versionHead b'),n=it.querySelector('.note');if(b)b.textContent=src[i][0];if(n)n.textContent=src[i][1];});
  }
 }
-function render(){const p=profile(),has=!!p.emp&&!!p.name;document.body.classList.toggle('isAdmin',p.role==='admin');$('setup').classList.toggle('hidden',has);$('app').classList.toggle('hidden',!has);if(!has)return;applyForeignLanguage(p);const foreign=isForeignEmployee(p),x=vals(),displayCode=x.formOvertimeCode||x.overtimeCode,h=hoursFromVals(x),eq=equivalentHours(h,x.isNationalHoliday?'national':x.isWeekend?'weekend':'weekday');$('vName').textContent=x.name;$('vEmp').textContent=x.emp;$('vDepartment').textContent=x.department||'-';$('vShiftSchedule').textContent=foreign?`${x.shift==='NIGHT'?'Night':'Day'} / ${x.scheduleType==='REGULAR'?'Regular':x.scheduleType}`:`${x.shift==='NIGHT'?'夜班':'日班'} / ${x.scheduleType==='REGULAR'?'常日/夜':x.scheduleType}`;$('vDate').textContent=x.startIso||x.iso;$('vTime').textContent=String(x.sh).padStart(2,'0')+':'+String(x.sm).padStart(2,'0')+'–'+String(x.eh).padStart(2,'0')+':'+String(x.em).padStart(2,'0');$('vType').textContent=foreign?(displayCode===20?'20 Rest-day overtime':displayCode===63?'63 National-holiday overtime':'10 Weekday overtime'):x.type.split(' Foreign')[0];$('vBreak').textContent=foreign?`${x.brk} h`:`${x.brk} 小時`;$('currentHours').textContent=`${h.toFixed(1)}h`;$('currentEquiv').textContent=foreign?'Actual overtime hours only':`等值基本時數 ${eq.toFixed(2)}h`;$('currentCalcLabel').textContent=foreign?'Current overtime':'本次換算';$('foreignNotice').classList.add('hidden');$('statEquivalentBox').classList.toggle('hidden',foreign);$('statsRuleNote').textContent=foreign?'Statistics period: previous month 26th to current month 25th. Foreign employee mode shows actual overtime hours only.':'統計區間：前一個月 26 日～當月 25 日。等值基本時數依你的規則換算：平日 1.5 倍；週末／國定假日前 8 小時 2 倍，超過 8 小時部分 3 倍。';const b=$('dayBadge');if(['42A','42B','42C'].includes(x.scheduleType)){b.textContent=foreign?`🔄 ${x.scheduleType}｜${x.isWorkDay?'Work day':'Rest day'}｜${displayCode}`:`🔄 ${x.scheduleType}｜${x.isWorkDay?'工作日':'休息日'}｜${displayCode}`;b.className='dayBadge '+(x.isWorkDay?'weekday':'weekend');}else if(x.isNationalHoliday){b.textContent=foreign?`🎉 ${x.holidayName||'National holiday'}｜${displayCode} National-holiday overtime`:`🎉 ${x.holidayName}｜${displayCode} 國定假日加班`;b.className='dayBadge holiday';}else if(x.isWeekend){b.textContent=foreign?`🗓️ Rest day｜${displayCode} Rest-day overtime`:`🗓️ 週末｜${displayCode} 休息日加班`;b.className='dayBadge weekend';}else{b.textContent=foreign?'💼 Weekday｜10 Weekday overtime':'💼 平日｜10 平日加班';b.className='dayBadge weekday';}renderStats();renderAchievements();renderAdmin();if(p.role!=='admin')refreshAdminEligibility()}
+function render(){const p=profile(),has=!!p.emp&&!!p.name;document.body.classList.toggle('isAdmin',p.role==='admin');$('setup').classList.toggle('hidden',has);$('app').classList.toggle('hidden',!has);if(!has)return;applyForeignLanguage(p);const foreign=isForeignEmployee(p),x=vals(),displayCode=x.formOvertimeCode||x.overtimeCode,h=hoursFromVals(x),eq=equivalentHours(h,x.isNationalHoliday?'national':x.isWeekend?'weekend':'weekday'),route=declarationFormRoute(x.department),msDates=microsoftActualDates(x,p),displayStart=route==='MICROSOFT'?msDates.start:(x.startIso||x.iso),displayEnd=route==='MICROSOFT'?msDates.end:(x.endIso||x.iso);$('vName').textContent=x.name;$('vEmp').textContent=x.emp;$('vDepartment').textContent=x.department||'-';$('vFormRoute').textContent=route==='GOOGLE'?'Google Forms':route==='MICROSOFT'?'Microsoft Forms':'UNKNOWN';$('vFormRoute').className='value '+(route==='UNKNOWN'?'warnText':'okText');$('vShiftSchedule').textContent=foreign?`${x.shift==='NIGHT'?'Night':'Day'} / ${x.scheduleType==='REGULAR'?'Regular':x.scheduleType}`:`${x.shift==='NIGHT'?'夜班':'日班'} / ${x.scheduleType==='REGULAR'?'常日/夜':x.scheduleType}`;$('vDate').textContent=displayStart===displayEnd?displayStart:`${displayStart} → ${displayEnd}`;$('vTime').textContent=String(x.sh).padStart(2,'0')+':'+String(x.sm).padStart(2,'0')+'–'+String(x.eh).padStart(2,'0')+':'+String(x.em).padStart(2,'0');$('vType').textContent=foreign?(displayCode===20?'Overtime on rest days (no transportation allowance)':displayCode===63?'Overtime on national holidays (no transportation allowance)':'Overtime on normal days'):(displayCode===60?'國定假日加班':displayCode===25?'休息日加班':'平日加班');$('vReason').textContent=route==='MICROSOFT'?(foreign?'FOR PRODUCTION':'配合產能需求'):(foreign?'SUPPORT PRODUCTION':'配合生產');if(route==='MICROSOFT')$('simulate').textContent=foreign?'Submit overtime declaration':'送出加班申報';else if(route==='GOOGLE')$('simulate').textContent=foreign?'Open overtime form':'前往加班申報';else $('simulate').textContent=foreign?'Department error':'部門設定異常';$('vBreak').textContent=foreign?`${x.brk} h`:`${x.brk} 小時`;$('currentHours').textContent=`${h.toFixed(1)}h`;$('currentEquiv').textContent=foreign?'Actual overtime hours only':`等值基本時數 ${eq.toFixed(2)}h`;$('currentCalcLabel').textContent=foreign?'Current overtime':'本次換算';$('foreignNotice').classList.add('hidden');$('statEquivalentBox').classList.toggle('hidden',foreign);$('statsRuleNote').textContent=foreign?'Statistics period: previous month 26th to current month 25th. Foreign employee mode shows actual overtime hours only.':'統計區間：前一個月 26 日～當月 25 日。等值基本時數依你的規則換算：平日 1.5 倍；週末／國定假日前 8 小時 2 倍，超過 8 小時部分 3 倍。';const b=$('dayBadge');if(['42A','42B','42C'].includes(x.scheduleType)){b.textContent=foreign?`🔄 ${x.scheduleType}｜${x.isWorkDay?'Work day':'Rest day'}｜${displayCode===20?'Overtime on rest days (no transportation allowance)':displayCode===63?'Overtime on national holidays (no transportation allowance)':'Overtime on normal days'}`:`🔄 ${x.scheduleType}｜${x.isWorkDay?'工作日':'休息日'}｜${displayCode}`;b.className='dayBadge '+(x.isWorkDay?'weekday':'weekend');}else if(x.isNationalHoliday){b.textContent=foreign?`🎉 ${x.holidayName||'National holiday'}｜${displayCode===63?'Overtime on national holidays (no transportation allowance)':'Overtime on national holidays'}`:`🎉 ${x.holidayName}｜${displayCode} 國定假日加班`;b.className='dayBadge holiday';}else if(x.isWeekend){b.textContent=foreign?`🗓️ Rest day｜${displayCode===20?'Overtime on rest days (no transportation allowance)':'Overtime on rest days'}`:`🗓️ 週末｜${displayCode} 休息日加班`;b.className='dayBadge weekend';}else{b.textContent=foreign?'💼 Weekday｜Overtime on normal days':'💼 平日｜10 平日加班';b.className='dayBadge weekday';}renderStats();renderAchievements();renderAdmin();if(p.role!=='admin')refreshAdminEligibility()}
 $('emp').addEventListener('input',()=>applySetupLanguage($('emp').value.trim().toUpperCase().endsWith('F')));
 $('localLogin').onclick=async()=>{
  const emp=$('emp').value.trim().toUpperCase(),second=$('name').value.trim();
@@ -554,15 +563,37 @@ $('localRegister').onclick=async()=>{
    logError('API-REG-001','registration',String(err&&err.message||err),{employeeId:emp});
  }finally{btn.disabled=false}
 };
+let pendingMicrosoftSubmit=null;
+function closeSubmitConfirm_(){pendingMicrosoftSubmit=null;$('submitConfirmModal').classList.add('hidden');$('simulate').disabled=false;}
+$('submitConfirmNo').onclick=closeSubmitConfirm_;
+$('submitConfirmYes').onclick=async()=>{
+  const d=pendingMicrosoftSubmit;if(!d){closeSubmitConfirm_();return;}
+  $('submitConfirmYes').disabled=true;$('submitConfirmNo').disabled=true;$('submitConfirmYes').textContent=d.foreign?'Submitting...':'送出中…';
+  try{
+    const r=await submitMicrosoftV50Backend(d);
+    if(!r||r.ok!==true||r.submitted!==true)throw new Error((r&&r.error)||'Microsoft Forms 送出失敗');
+    $('submitConfirmModal').classList.add('hidden');pendingMicrosoftSubmit=null;
+    try{await syncRecordsFromBackend(d.employeeId,d.name);}catch(_){}
+    render();checkAchievements();
+    alert(d.foreign?'Overtime declaration submitted successfully.':'✅ 加班申報送出成功');
+  }catch(err){alert((d.foreign?'Submission failed: ':'❌ 送出失敗：')+String(err&&err.message||err));}
+  finally{$('submitConfirmYes').disabled=false;$('submitConfirmNo').disabled=false;$('simulate').disabled=false;if(!$('submitConfirmModal').classList.contains('hidden'))$('submitConfirmYes').textContent=d.foreign?'Confirm submit':'確認送出';}
+};
 $('simulate').onclick=()=>{
   const btn=$('simulate');if(btn.disabled)return;btn.disabled=true;
-  const fresh=vals(),p=profile(),formUrl=buildGoogleFormUrl(fresh);
+  const fresh=vals(),p=profile(),route=declarationFormRoute(p.department),foreign=isForeignEmployee(p);
+  if(route==='UNKNOWN'){alert(foreign?'Department setting error. Submission blocked.':'❌ 部門設定異常，已阻止申報。');btn.disabled=false;return;}
+  if(route==='GOOGLE'){
+    const formUrl=buildGoogleFormUrl(fresh);markOp('declare');checkAchievements();
+    try{fetch(BACKEND_API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({action:'declare',employeeId:p.emp,name:p.name,date:fresh.iso,time:`${fresh.sh}:${fresh.sm}-${fresh.eh}:${fresh.em}`,startDate:fresh.startIso,endDate:fresh.endIso,breakHours:fresh.brk,type:fresh.type,holidayName:fresh.holidayName||'',reason:isForeignEmployee(p)?'SUPPORT PRODUCTION':'配合生產'}),keepalive:true,cache:'no-store'}).catch(()=>{});}catch{}
+    location.href=formUrl;setTimeout(()=>{btn.disabled=false},1200);return;
+  }
   markOp('declare');checkAchievements();
-  // best-effort 紀錄；不 await。重複只在後端略過，不回前端彈窗。
-  try{fetch(BACKEND_API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({action:'declare',employeeId:p.emp,name:p.name,date:fresh.iso,time:`${fresh.sh}:${fresh.sm}-${fresh.eh}:${fresh.em}`,startDate:fresh.startIso,endDate:fresh.endIso,breakHours:fresh.brk,type:fresh.type,holidayName:fresh.holidayName||'',reason:isForeignEmployee(p)?'SUPPORT PRODUCTION':'配合生產'}),keepalive:true,cache:'no-store'}).catch(()=>{});}catch{}
-  // 關鍵路徑：立即開 Forms，不等待後端查重、統計、成就。
-  location.href=formUrl;
-  setTimeout(()=>{btn.disabled=false},1200);
+  const displayCode=fresh.formOvertimeCode||fresh.overtimeCode,typeText=foreign?(displayCode===20?'Overtime on rest days (no transportation allowance)':displayCode===63?'Overtime on national holidays (no transportation allowance)':'Overtime on normal days'):(displayCode===60?'國定假日加班':displayCode===25?'休息日加班':'平日加班'),reason=foreign?'FOR PRODUCTION':'配合產能需求',dates=microsoftActualDates(fresh,p),startTime=String(fresh.sh).padStart(2,'0')+':'+String(fresh.sm).padStart(2,'0'),endTime=String(fresh.eh).padStart(2,'0')+':'+String(fresh.em).padStart(2,'0');
+  pendingMicrosoftSubmit={foreign,employeeId:p.emp,name:p.name,date:fresh.iso,department:p.department};
+  $('submitConfirmTitle').textContent=foreign?'Confirm overtime submission':'確認送出加班申報';
+  $('submitConfirmText').textContent=(foreign?'Department: ':'部門：')+p.department+'\n'+(foreign?'Form route: ':'表單路由：')+'Microsoft Forms\n'+(foreign?'Date: ':'日期：')+dates.start+' → '+dates.end+'\n'+(foreign?'Time: ':'時間：')+startTime+' → '+endTime+'\n'+(foreign?'Overtime type: ':'加班類型：')+typeText+'\n'+(foreign?'Overtime reason: ':'加班理由：')+reason;
+  $('submitConfirmYes').textContent=foreign?'Confirm submit':'確認送出';$('submitConfirmNo').textContent=foreign?'Cancel':'取消';$('submitConfirmModal').classList.remove('hidden');
 };
 function switchTab(tab){if(tab==='admin'&&profile().role!=='admin'){logError('AUTH-ADMIN-403','authorization','非管理員嘗試開啟管理頁');return}document.querySelectorAll('.tab').forEach(el=>el.classList.add('hidden'));$(`tab-${tab}`).classList.remove('hidden');document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));if(tab==='achievements')tapCounter('achievementVisits',10,30000);markOp(tab)}
 document.querySelectorAll('.nav button').forEach(b=>b.onclick=()=>switchTab(b.dataset.tab));
