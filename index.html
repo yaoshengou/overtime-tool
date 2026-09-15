@@ -515,12 +515,10 @@ $('localLogin').onclick=async()=>{
  if(!emp||!second){$('loginState').textContent='❌ 請輸入工號與姓名';return}
  const btn=$('localLogin');btn.disabled=true;$('loginState').textContent='⏳ 驗證中…';
  try{
-   const validation=await validateRegistrationBackend(emp,second);
-   if(!validation||validation.ok!==true){$('loginState').textContent='❌ '+((validation&&validation.error)||'工號格式不正確');return}
    const login=await loginBackend(emp,second);
    if(!login||login.ok!==true||login.loggedIn!==true){$('loginState').textContent='❌ '+((login&&login.error)||'工號或姓名不正確');return}
    if(!login.department||!login.shift||!login.scheduleType){$('loginState').textContent='❌ 帳號資料尚未完成設定，請聯絡管理員';return}
-   const finalEmp=login.employeeId||validation.employeeId||emp,finalName=login.name||validation.name||second;
+   const finalEmp=login.employeeId||emp,finalName=login.name||second;
    localStorage.setItem('ot45_emp',finalEmp);localStorage.setItem('ot45_name',finalName);localStorage.setItem('ot45_role','user');localStorage.setItem('ot46_department',login.department||'');localStorage.setItem('ot46_shift',login.shift||'');localStorage.setItem('ot46_schedule',login.scheduleType||'');setAdminSession('');rememberCachedUser(finalEmp,finalName);
    $('loginState').textContent='✅ 登入成功';
    render();switchTab('declare');
