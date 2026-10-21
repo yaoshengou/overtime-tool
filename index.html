@@ -254,10 +254,21 @@ const $=id=>document.getElementById(id);
    return data;
  }
  function normalizeDay(data,iso,verified=true,sourceOverride=''){
-   return {iso:data.date||iso,holidayName:data.holidayName||'',isNationalHoliday:!!data.isNationalHoliday,isWeekend:!!data.isWeekend,isHoliday:!!data.isHoliday,overtimeCode:Number(data.overtimeCode),overtimeType:data.overtimeType||'',holidaySource:sourceOverride||data.holidaySource||'',environment:data.environment||'',backendVerified:verified};
+   return applyObservedHolidayDay({iso:data.date||iso,holidayName:data.holidayName||'',isNationalHoliday:!!data.isNationalHoliday,isWeekend:!!data.isWeekend,isHoliday:!!data.isHoliday,overtimeCode:Number(data.overtimeCode),overtimeType:data.overtimeType||'',holidaySource:sourceOverride||data.holidaySource||'',environment:data.environment||'',backendVerified:verified});
+ }
+ // Only the confirmed 2026 original/observed date pairs override holiday data.
+ const OBSERVED_HOLIDAY_PAIRS_2026=Object.freeze({
+   '2026-02-15':'2026-02-20','2026-02-28':'2026-02-27',
+   '2026-04-04':'2026-04-03','2026-04-05':'2026-04-06',
+   '2026-10-10':'2026-10-09','2026-10-25':'2026-10-26'
+ });
+ function applyObservedHolidayDay(day){
+   if(!day||!Object.prototype.hasOwnProperty.call(OBSERVED_HOLIDAY_PAIRS_2026,day.iso)&&!Object.values(OBSERVED_HOLIDAY_PAIRS_2026).includes(day.iso))return day;
+   const corrected=builtInDay(day.iso);
+   return {...day,holidayName:corrected.holidayName,isNationalHoliday:corrected.isNationalHoliday,isWeekend:corrected.isWeekend,isHoliday:corrected.isHoliday,overtimeCode:corrected.overtimeCode,overtimeType:corrected.overtimeType};
  }
  function readHolidayCache(iso){
-   try{const c=JSON.parse(localStorage.getItem(HOLIDAY_CACHE_KEY)||'{}');return c&&c[iso]?c[iso]:null}catch{return null}
+   try{const c=JSON.parse(localStorage.getItem(HOLIDAY_CACHE_KEY)||'{}');return c&&c[iso]?applyObservedHolidayDay(c[iso]):null}catch{return null}
  }
  function writeHolidayCache(day){
    try{const c=JSON.parse(localStorage.getItem(HOLIDAY_CACHE_KEY)||'{}')||{};c[day.iso]={...day,cachedAt:Date.now()};localStorage.setItem(HOLIDAY_CACHE_KEY,JSON.stringify(c))}catch{}
@@ -282,9 +293,9 @@ const $=id=>document.getElementById(id);
  }
 const HOLIDAYS_2026={
  "2026-01-01":"元旦","2026-02-16":"除夕","2026-02-17":"春節","2026-02-18":"春節","2026-02-19":"春節","2026-02-20":"春節補假",
- "2026-02-27":"和平紀念日補假","2026-02-28":"和平紀念日","2026-04-03":"兒童節補假","2026-04-04":"兒童節","2026-04-05":"清明節","2026-04-06":"清明節補假",
- "2026-05-01":"勞動節","2026-06-19":"端午節","2026-09-25":"中秋節","2026-09-28":"教師節","2026-10-09":"國慶日補假","2026-10-10":"國慶日",
- "2026-10-25":"臺灣光復節","2026-10-26":"臺灣光復節補假","2026-12-25":"行憲紀念日"
+ "2026-02-27":"和平紀念日補假","2026-04-03":"兒童節補假","2026-04-06":"清明節補假",
+ "2026-05-01":"勞動節","2026-06-19":"端午節","2026-09-25":"中秋節","2026-09-28":"教師節","2026-10-09":"國慶日補假",
+ "2026-10-26":"臺灣光復節補假","2026-12-25":"行憲紀念日"
 };
 const HOLIDAYS={...HOLIDAYS_2026};
 const RARITY={common:"普通",rare:"稀有",epic:"史詩",legendary:"傳說",hidden:"隱藏"};
